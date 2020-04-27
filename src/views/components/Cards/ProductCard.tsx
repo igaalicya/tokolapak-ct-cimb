@@ -45,7 +45,7 @@ class ProductCard extends React.Component<ProductCardProps> {
           </div>
           <ButtonUI
             type="outlined"
-            style={{ fontSize: "12px", padding: "4px 8px" }}
+            style={{ fontSize: "12px", padding: "4px 8px" }} onClick=""
           >
             {" "}
             <FontAwesomeIcon icon={faHeart} /> Add to wishlist
