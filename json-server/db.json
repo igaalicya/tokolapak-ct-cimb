@@ -29,6 +29,14 @@
       "fullName": "",
       "role": "user",
       "id": 4
+    },
+    {
+      "username": "igaalicya",
+      "password": "1231",
+      "repPassword": "1231",
+      "fullName": "alicya",
+      "role": "user",
+      "id": 5
     }
   ]
 }
