@@ -47,9 +47,9 @@ class AuthScreen extends React.Component {
 
     if (password == repPassword) {
       this.props.registerHandler(userData);
-      swal("Berhasil", "Registrasi akun berhasil", "success");
+      
     } else {
-      swal("Gagal", "Password tidak cocok", "error");
+      
     }
   };
 
@@ -62,7 +62,7 @@ class AuthScreen extends React.Component {
     };
 
     this.props.loginHandler(userData);
-    swal("Berhasil", `Selamat ${userData.username} berhasil masuk`, "success");
+    
   };
 
   render() {
