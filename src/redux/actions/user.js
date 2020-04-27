@@ -1,19 +1,11 @@
 import Axios from "axios";
-import { API_URL } from "../../constant/API";
-import user from "../reducers/user";
+import { API_URL } from "../../constants/API";
 import Cookie from "universal-cookie";
 import userTypes from "../types/user";
 
-const { ON_LOGIN_SUCCESS, ON_LOGIN_FAIL, ON_LOGOUT_SUCCESS } = userTypes;
+const { ON_LOGIN_FAIL, ON_LOGIN_SUCCESS, ON_LOGOUT_SUCCESS } = userTypes;
 
-const cookieObject = new Cookie();
-
-export const usernameInputHandler = text => {
-  return {
-    type: "ON_CHANGE_USERNAME",
-    payload: text
-  };
-};
+const cookieObj = new Cookie();
 
 export const loginHandler = userData => {
   return dispatch => {
@@ -27,19 +19,12 @@ export const loginHandler = userData => {
     })
       .then(res => {
         if (res.data.length > 0) {
-          // alert("masuk");
           dispatch({
             type: ON_LOGIN_SUCCESS,
             payload: res.data[0]
-            // {
-            //   id,
-            //   username,
-            //   password,
-            //   fullName,
-            //   role,
-            // }
           });
         } else {
+          alert("masuk");
           dispatch({
             type: ON_LOGIN_FAIL,
             payload: "Username atau password salah"
@@ -135,10 +120,9 @@ export const userKeepLogin = userData => {
 };
 
 export const logoutHandler = () => {
-  // bisa ditaroh sini bisa ditaroh navbar
-  cookieObject.remove("authData");
+  cookieObj.remove("authData");
   return {
-    type: "ON_LOGOUT"
+    type: ON_LOGOUT_SUCCESS
   };
 };
 
