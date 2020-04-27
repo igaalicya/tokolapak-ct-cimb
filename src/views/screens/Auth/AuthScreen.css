@@ -1,0 +1,26 @@
+:root {
+  --accent-default: #3c64b1;
+  --accent-dark: #1e4693;
+  --accent-light: #5a82cf;
+  --accent-gray: #737b7d;
+  --accent-white: #ffffff;
+}
+
+.rect {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+  background: var(--accent-white);
+  border: 2px solid #c3cbcd;
+  box-sizing: border-box;
+}
+
+.text-accent-default {
+  color: var(--accent-default);
+}
+
+.text-gray {
+  color: var(--accent-gray);
+}

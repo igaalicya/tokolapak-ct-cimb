@@ -2,6 +2,8 @@
   --accent-default: #3c64b1;
   --accent-dark: #1e4693;
   --accent-light: #5a82cf;
+  --accent-black: #373f41;
+  --accent-white: #ffffff;
 }
 
 .custom-btn {
@@ -66,4 +68,18 @@
 
 .custom-btn-textual:active {
   color: var(--accent-dark);
+}
+
+.custom-btn-light-pill-unselected {
+  background: var(--accent-white);
+  border: 1px solid #e2e5e6;
+  box-sizing: border-box;
+  color: var(--accent-black);
+}
+
+.custom-btn-light-pill-selected {
+  background: var(--accent-black);
+  border: 1px solid #e2e5e6;
+  box-sizing: border-box;
+  color: var(--accent-white);
 }
