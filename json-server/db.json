@@ -7,36 +7,37 @@
       "id": 1
     },
     {
-      "username": "alicya",
+      "username": "iga3",
+      "fullName": "alicya",
       "password": "123",
-      "repPassword": "123",
-      "fullName": "Iga Alicya",
-      "role": "user",
+      "email": "igaalicya",
+      "id": 2
+    }
+  ],
+  "products": [
+    {
+      "productName": "iPhone 7 Plus",
+      "price": 5000000,
+      "category": "Phone",
+      "image": "https://ibox.co.id/media/wysiwyg/PromoOnline/web-banner---iphone-7-plus-rev.png",
+      "desc": "HP Terbaikk loh",
+      "id": 1
+    },
+    {
+      "productName": "iPad Pro 3",
+      "price": 15000000,
+      "category": "Tablet",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-pro-11-select-cell-spacegray-201810.png",
+      "desc": "HP Terbaikk loh",
       "id": 2
     },
     {
-      "username": "igaaaa",
-      "password": "12345",
-      "repPassword": "12345",
-      "fullName": "iga alicya",
-      "role": "user",
+      "productName": "Macbook Pro",
+      "price": 20000000,
+      "category": "Laptop",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
+      "desc": "HP Terbaikk loh",
       "id": 3
-    },
-    {
-      "username": "",
-      "password": "",
-      "repPassword": "",
-      "fullName": "",
-      "role": "user",
-      "id": 4
-    },
-    {
-      "username": "igaalicya",
-      "password": "1231",
-      "repPassword": "1231",
-      "fullName": "alicya",
-      "role": "user",
-      "id": 5
     }
   ]
 }
