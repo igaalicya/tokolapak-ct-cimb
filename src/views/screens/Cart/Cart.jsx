@@ -5,34 +5,32 @@ import Axios from "axios";
 import { API_URL } from "../../../constants/API";
 
 class Cart extends React.Component {
-  state = {
-    cartData: []
-  };
   componentDidMount() {
-    Axios.get(`${API_URL}/cart`, {
+    Axios.get(`${API_URL}/carts`, {
       params: {
         userId: this.props.user.id,
         _expand: "product"
       }
     })
       .then(res => {
-        console.log(res.data[0]);
-        this.setState({ cartData: res.data[0] });
+        console.log(res.data);
       })
       .catch(err => {
         console.log(err);
       });
-  }
 
-  renderCart = () => {
-    return this.state.cartData.map(val => {
-      return (
-        <tr>
-          <td>{val.id}</td>
-        </tr>
-      );
-    });
-  };
+    // Axios.get(`${API_URL}/products/1`, {
+    //   params: {
+    //     _embed: "carts",
+    //   },
+    // })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  }
 
   render() {
     return (

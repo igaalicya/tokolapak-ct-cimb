@@ -4,6 +4,7 @@ import swal from "sweetalert";
 
 import "./ProductDetails.css";
 import ButtonUI from "../../components/Button/Button";
+import TextField from "../../components/TextField/TextField";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
 
@@ -20,6 +21,10 @@ class ProductDetails extends React.Component {
   };
 
   addToCartHandler = () => {
+    // POST method ke /cart
+    // Isinya: userId, productId, quantity
+    // console.log(this.props.user.id);
+    console.log(this.state.productData.id);
     Axios.post(`${API_URL}/cart`, {
       userId: this.props.user.id,
       productId: this.state.productData.id,
@@ -27,7 +32,7 @@ class ProductDetails extends React.Component {
     })
       .then(res => {
         console.log(res);
-        swal("Add to Cart", "your item has been added to cart", "success");
+        swal("Add to cart", "Your item has been added to your cart", "success");
       })
       .catch(err => {
         console.log(err);
@@ -35,18 +40,15 @@ class ProductDetails extends React.Component {
   };
 
   componentDidMount() {
-    Axios.get(`${API_URL}/products/`, {
-      params: {
-        id: this.props.match.params.id
-      }
-    })
+    Axios.get(`${API_URL}/products/${this.props.match.params.productId}`)
       .then(res => {
-        this.setState({ productData: res.data[0] });
+        this.setState({ productData: res.data });
       })
       .catch(err => {
-        alert("Product tidak tersedia");
+        console.log(err);
       });
   }
+
   render() {
     const {
       productName,
@@ -68,13 +70,14 @@ class ProductDetails extends React.Component {
           </div>
           <div className="col-6 d-flex flex-column justify-content-center">
             <h3>{productName}</h3>
-            <h4 className="price">
+            <h4>
               {new Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR"
               }).format(price)}
             </h4>
             <p className="mt-4">{desc}</p>
+            {/* <TextField type="number" placeholder="Quantity" className="mt-3" /> */}
             <div className="d-flex flex-row mt-4">
               <ButtonUI onClick={this.addToCartHandler}>Add To Cart</ButtonUI>
               <ButtonUI className="ml-4" type="outlined">

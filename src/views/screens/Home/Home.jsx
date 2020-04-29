@@ -43,7 +43,7 @@ const dummy = [
     image: iPadPro,
     desc: `
     iPad Pro baru telah didesain ulang seutuhnya dan dilengkapi dengan teknologi Apple yang paling canggih. Ini akan membuat Anda berpikir ulang apa yang iPad mampu lakukan`,
-    id: 2
+    id: 3
   }
 ];
 
@@ -122,9 +122,11 @@ class Home extends React.Component {
       });
   };
 
-  renderProduct = () => {
+  renderProducts = () => {
     return this.state.bestSellerData.map(val => {
-      return <ProductCard className="m-2" data={val} />;
+      return (
+        <ProductCard key={`bestseller-${val.id}`} data={val} className="m-2" />
+      );
     });
   };
 
@@ -171,7 +173,7 @@ class Home extends React.Component {
           {/* BEST SELLER SECTION */}
           <h2 className="text-center font-weight-bolder mt-5">BEST SELLER</h2>
           <div className="row d-flex flex-wrap justify-content-center">
-            {this.renderProduct()}
+            {this.renderProducts()}
           </div>
         </div>
         {/* ABOUT SECTION */}
