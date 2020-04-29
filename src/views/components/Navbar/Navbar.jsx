@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/";
 
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import "./Navbar.css";
-import { Link } from "react-router-dom";
 import ButtonUI from "../Button/Button.tsx";
-import { connect } from "react-redux";
 
 const CircleBg = ({ children }) => {
   return <div className="circle-bg">{children}</div>;
@@ -77,7 +78,7 @@ class Navbar extends React.Component {
                   style={{ textDecoration: "none", color: "inherit" }}
                   to="/auth"
                 >
-                  Sign Up
+                  Sign up
                 </Link>
               </ButtonUI>
             </>
@@ -92,5 +93,4 @@ const mapStateToProps = state => {
     user: state.user
   };
 };
-
 export default connect(mapStateToProps)(Navbar);

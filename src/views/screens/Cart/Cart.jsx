@@ -5,6 +5,9 @@ import Axios from "axios";
 import { API_URL } from "../../../constants/API";
 
 class Cart extends React.Component {
+  state = {
+    cartData: []
+  };
   componentDidMount() {
     Axios.get(`${API_URL}/cart`, {
       params: {
@@ -13,17 +16,38 @@ class Cart extends React.Component {
       }
     })
       .then(res => {
-        console.log(res.data);
+        console.log(res.data[0]);
+        this.setState({ cartData: res.data[0] });
       })
       .catch(err => {
         console.log(err);
       });
   }
 
+  renderCart = () => {
+    return this.state.cartData.map(val => {
+      return (
+        <tr>
+          <td>{val.id}</td>
+        </tr>
+      );
+    });
+  };
+
   render() {
     return (
       <div className="container">
-        <div>Cart</div>
+        <table className="table-bordered" align="center">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Product</th>
+              <th>Harga</th>
+              <th>Quantity</th>
+            </tr>
+          </thead>
+          {/* <tbody>{this.renderCart()}</tbody> */}
+        </table>
       </div>
     );
   }
