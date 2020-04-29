@@ -89,7 +89,11 @@ class Cart extends React.Component {
           {this.state.cartData.length != 0 ? (
             <tbody>{this.renderCart()}</tbody>
           ) : (
-            <h3>Cart Kosong! silahkan belanja</h3>
+            <tbody>
+              <tr>
+                <td colSpan="6">Cart Kosong! silahkan belanja</td>
+              </tr>
+            </tbody>
           )}
         </table>
       </div>
