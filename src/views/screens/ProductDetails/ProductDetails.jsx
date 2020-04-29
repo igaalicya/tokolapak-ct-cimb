@@ -66,7 +66,7 @@ class ProductDetails extends React.Component {
               alt=""
             />
           </div>
-          <div className="col-6 d-flex flex-column justify-content:-center">
+          <div className="col-6 d-flex flex-column justify-content-center">
             <h3>{productName}</h3>
             <h4 className="price">
               {new Intl.NumberFormat("id-ID", {
