@@ -109,6 +109,6 @@ export const registerHandler = userData => {
 
 export const cookieChecker = () => {
   return {
-    type: "COOKIE_CHECK",
+    type: "COOKIE_CHECK"
   };
 };

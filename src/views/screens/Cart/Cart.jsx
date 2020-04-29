@@ -5,7 +5,15 @@ import Axios from "axios";
 import { API_URL } from "../../../constants/API";
 
 class Cart extends React.Component {
+  state = {
+    cartData: []
+  };
+
   componentDidMount() {
+    this.getCartData();
+  }
+
+  getCartData = () => {
     Axios.get(`${API_URL}/carts`, {
       params: {
         userId: this.props.user.id,
@@ -14,37 +22,75 @@ class Cart extends React.Component {
     })
       .then(res => {
         console.log(res.data);
+        this.setState({ cartData: res.data });
       })
       .catch(err => {
         console.log(err);
       });
+  };
 
-    // Axios.get(`${API_URL}/products/1`, {
-    //   params: {
-    //     _embed: "carts",
-    //   },
-    // })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  }
+  renderCart = () => {
+    return this.state.cartData.map((val, idx) => {
+      return (
+        <tr>
+          <td>{idx + 1}</td>
+          <td>
+            <img
+              src={val.product.image}
+              style={{ width: "100%", objectFit: "contain", height: "100px" }}
+            />
+          </td>
+          <td>{val.product.productName}</td>
+          <td>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR"
+            }).format(val.product.price)}
+          </td>
+          <td>{val.quantity}</td>
+          <td>
+            <input
+              type="button"
+              className="btn btn-danger"
+              value="Delete"
+              onClick={() => this.deleteHandler(val.id)}
+            />
+          </td>
+        </tr>
+      );
+    });
+  };
+
+  deleteHandler = id => {
+    Axios.delete(`${API_URL}/carts/${id}`)
+      .then(res => {
+        console.log(res);
+        this.getCartData();
+      })
+      .catch(err => {
+        console.log("gagal");
+      });
+  };
 
   render() {
     return (
       <div className="container">
-        <table className="table-bordered" align="center">
+        <h2 className="mt-5 text-center">Cart List</h2>
+        <table className="table text-center mt-4">
           <thead>
             <tr>
               <th>No</th>
-              <th>Nama Product</th>
+              <th colSpan="2">Nama Product</th>
               <th>Harga</th>
               <th>Quantity</th>
+              <th>Action</th>
             </tr>
           </thead>
-          {/* <tbody>{this.renderCart()}</tbody> */}
+          {this.state.cartData.length != 0 ? (
+            <tbody>{this.renderCart()}</tbody>
+          ) : (
+            <h3>Cart Kosong! silahkan belanja</h3>
+          )}
         </table>
       </div>
     );
