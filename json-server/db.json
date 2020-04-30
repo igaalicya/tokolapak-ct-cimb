@@ -7,35 +7,54 @@
       "id": 1
     },
     {
+<<<<<<< HEAD
       "username": "iga2",
       "fullName": "alicya",
       "password": "123",
       "email": "igaalicya2@gmail.com",
+=======
+      "username": "doraemon",
+      "fullName": "Dora Emon",
+      "password": "password",
+      "email": "doraemon@mail.com",
+>>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
       "role": "user",
       "id": 2
     },
     {
+<<<<<<< HEAD
       "username": "iga3",
       "fullName": "alicya",
       "password": "123",
       "email": "igaalicya3@gmail.com",
+=======
+      "username": "pikachu",
+      "fullName": "Dora Emon",
+      "password": "password",
+      "email": "doraemon@mail.com",
+>>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
       "role": "user",
       "id": 3
     },
     {
       "username": "admin",
       "fullName": "Super Admin",
+<<<<<<< HEAD
       "password": "123",
       "email": "admin@gmail.com",
+=======
+      "password": "password",
+      "email": "admin@mail.com",
+>>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
       "role": "admin",
       "id": 4
     }
   ],
   "products": [
     {
-      "productName": "iPhone 7 Plus",
+      "productName": "iPhone 7 +",
       "price": 5000000,
-      "category": "Phone",
+      "category": "Tab",
       "image": "https://ibox.co.id/media/wysiwyg/PromoOnline/web-banner---iphone-7-plus-rev.png",
       "desc": "HP Terbaikk loh",
       "id": 1
@@ -57,6 +76,7 @@
       "id": 3
     },
     {
+<<<<<<< HEAD
       "productName": "Ipad Gen 7",
       "price": "1000000",
       "category": "Tab",
@@ -95,6 +115,55 @@
       "image": "https://ibox.co.id/media/wysiwyg/iPad/iPad7/ipad7_02-min.png",
       "desc": "daklsjdk",
       "id": 8
+=======
+      "name": "iMac (2019)",
+      "price": "23000000",
+      "category": "Desktop",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/m/imac-27-cto-hero-201903_1_1.jpeg",
+      "desc": "Desktop khusus para sultan gan.",
+      "id": 4,
+      "productName": "iMac (2019)"
+    },
+    {
+      "productName": "iPhone 11 Pro Max",
+      "price": "24000000",
+      "category": "",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
+      "desc": "HP Kamera boba",
+      "id": 5
+    },
+    {
+      "productName": "iPhone 11 Max abis",
+      "price": "123123123",
+      "category": "Phone",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
+      "desc": "asdasdasdsd",
+      "id": 6
+    },
+    {
+      "productName": "iPhone Max bet",
+      "price": "3132312",
+      "category": "Phone",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
+      "desc": "asdasdasdadadad",
+      "id": 7
+    },
+    {
+      "productName": "iPad 7 ",
+      "price": "6000000",
+      "category": "Tab",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-wifi-select-space-201909_geo_us.png",
+      "desc": "iPad baru",
+      "id": 8
+    },
+    {
+      "productName": "OPPO Find X2 Pro",
+      "price": "5300000",
+      "category": "Phone",
+      "image": "https://image.oppo.com/content/dam/oppo/id/mkt/header/Compass-Pro%20orange-EN.png",
+      "desc": "Keluaran terbaru dari OPPO guys, STOCK TERBATAS!!",
+      "id": 9
+>>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
     }
   ],
   "carts": [
@@ -111,12 +180,18 @@
       "id": 3
     },
     {
+<<<<<<< HEAD
       "userId": 1,
       "productId": 2,
+=======
+      "userId": 0,
+      "productId": 1,
+>>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
       "quantity": 1,
       "id": 4
     },
     {
+<<<<<<< HEAD
       "userId": 1,
       "productId": 3,
       "quantity": 2,
@@ -145,6 +220,18 @@
         }
       ],
       "id": 1
+=======
+      "userId": 4,
+      "productId": 1,
+      "quantity": 1,
+      "id": 5
+    },
+    {
+      "userId": 4,
+      "productId": 1,
+      "quantity": 1,
+      "id": 6
+>>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
     }
   ]
 }

@@ -4,12 +4,17 @@ import { connect } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownToggle,
+  DropdownMenu
+} from "reactstrap";
 
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import "./Navbar.css";
-import ButtonUI from "../Button/Button.tsx";
-
+import ButtonUI from "../Button/Button";
 import { logoutHandler } from "../../../redux/actions";
 
 import Cookie from "universal-cookie";
@@ -22,7 +27,8 @@ const CircleBg = ({ children }) => {
 class Navbar extends React.Component {
   state = {
     searchBarIsFocused: false,
-    searchBarInput: ""
+    searcBarInput: "",
+    dropdownOpen: false
   };
 
   inputHandler = (e, field) => {
@@ -39,7 +45,11 @@ class Navbar extends React.Component {
 
   onLogout = () => {
     this.props.onLogout();
-    // cookieObject.remove("authData");
+    // this.forceUpdate();
+  };
+
+  toggleDropdown = () => {
+    this.setState({ dropdownOpen: !this.state.dropdownOpen });
   };
 
   render() {
@@ -50,7 +60,10 @@ class Navbar extends React.Component {
             LOGO
           </Link>
         </div>
-        <div style={{ flex: 1 }} className="px-5">
+        <div
+          style={{ flex: 1 }}
+          className="px-5 d-flex flex-row justify-content-start"
+        >
           <input
             onFocus={this.onFocus}
             onBlur={this.onBlur}
@@ -65,8 +78,27 @@ class Navbar extends React.Component {
         <div className="d-flex flex-row align-items-center">
           {this.props.user.id ? (
             <>
-              <FontAwesomeIcon icon={faUser} style={{ fontSize: 24 }} />
-              <p className="small ml-3 mr-4">{this.props.user.username}</p>
+              <Dropdown
+                toggle={this.toggleDropdown}
+                isOpen={this.state.dropdownOpen}
+              >
+                <DropdownToggle tag="div" className="d-flex">
+                  <FontAwesomeIcon icon={faUser} style={{ fontSize: 24 }} />
+                  <p className="small ml-3 mr-4">{this.props.user.username}</p>
+                </DropdownToggle>
+                <DropdownMenu className="mt-2">
+                  <DropdownItem>
+                    <Link
+                      style={{ color: "inherit", textDecoration: "none" }}
+                      to="/admin/dashboard"
+                    >
+                      Dashboard
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>Members</DropdownItem>
+                  <DropdownItem>Payments</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
               <Link
                 className="d-flex flex-row"
                 to="/cart"
@@ -87,7 +119,7 @@ class Navbar extends React.Component {
                   to="/auth"
                 >
                   <ButtonUI
-                    className="ml-5"
+                    className="ml-3"
                     type="contained"
                     value="Logout"
                     onClick={this.onLogout}

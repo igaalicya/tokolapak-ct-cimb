@@ -10,10 +10,10 @@ import Home from "./views/screens/Home/Home";
 import Navbar from "./views/components/Navbar/Navbar";
 import AuthScreen from "./views/screens/Auth/AuthScreen";
 import ProductDetails from "./views/screens/ProductDetails/ProductDetails";
-import { userKeepLogin, cookieChecker } from "./redux/actions";
 import Cart from "./views/screens/Cart/Cart";
 import AdminDashboard from "./views/screens/Admin/AdminDashboard";
 import Checkout from "./views/screens/Checkout/Checkout";
+import { userKeepLogin, cookieChecker } from "./redux/actions";
 
 const cookieObj = new Cookie();
 
@@ -73,3 +73,13 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
+
+/**
+ * PR
+ * 1. Add to cart, jika barang double, qty yg akan bertambah
+ * 2. Di Home, ketika click PHONE/LAPTOP/TAB/DESKTOP
+ * 3. Di navbar, ketika ketik, secara otomatis filter products
+ * 4. Di cart, buat button checkout, serta dengan proses checkout
+ * 5. Ketika confirm checkout, lakukan POST request ke db.json ke transaction
+ *    -> lalu cart harus kosong
+ */
