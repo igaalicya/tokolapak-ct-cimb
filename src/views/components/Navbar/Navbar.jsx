@@ -10,6 +10,11 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import "./Navbar.css";
 import ButtonUI from "../Button/Button.tsx";
 
+import { logoutHandler } from "../../../redux/actions";
+
+import Cookie from "universal-cookie";
+const cookieObject = new Cookie();
+
 const CircleBg = ({ children }) => {
   return <div className="circle-bg">{children}</div>;
 };
@@ -26,6 +31,11 @@ class Navbar extends React.Component {
 
   onBlur = () => {
     this.setState({ searchBarIsFocused: false });
+  };
+
+  onLogout = () => {
+    this.props.onLogout();
+    // cookieObject.remove("authData");
   };
 
   render() {
@@ -67,6 +77,19 @@ class Navbar extends React.Component {
                     4
                   </small>
                 </CircleBg>
+                <Link
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  to="/auth"
+                >
+                  <ButtonUI
+                    className="ml-5"
+                    type="contained"
+                    value="Logout"
+                    onClick={this.onLogout}
+                  >
+                    Logout
+                  </ButtonUI>
+                </Link>
               </Link>
             </>
           ) : (
@@ -94,9 +117,14 @@ class Navbar extends React.Component {
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
     user: state.user
   };
 };
-export default connect(mapStateToProps)(Navbar);
+
+const mapDispatchToProps = {
+  onLogout: logoutHandler
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
