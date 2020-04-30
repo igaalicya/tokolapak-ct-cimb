@@ -119,8 +119,14 @@
     {
       "userId": 1,
       "productId": 3,
-      "quantity": 1,
+      "quantity": 2,
       "id": 5
+    },
+    {
+      "userId": 3,
+      "productId": 5,
+      "quantity": 1,
+      "id": 7
     }
   ],
   "transaction": [

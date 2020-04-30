@@ -157,7 +157,7 @@ class AuthScreen extends React.Component {
           />
           <input
             type="checkbox"
-            onChange={e => this.checkBoxHandler(e, "registerForm")}
+            onChange={e => this.checkBoxHandler(e, "loginForm")}
             className="mt-3"
             name="showPasswordLogin"
           />{" "}

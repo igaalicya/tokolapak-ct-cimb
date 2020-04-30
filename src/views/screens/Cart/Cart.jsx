@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Table, Alert } from "reactstrap";
+import { Table, Alert, Modal } from "reactstrap";
 import "./Cart.css";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
+import ButtonUI from "../../components/Button/Button";
 
 class Cart extends React.Component {
   state = {
@@ -51,12 +52,12 @@ class Cart extends React.Component {
           </td>
           <td>{val.quantity}</td>
           <td>
-            <input
-              type="button"
-              className="btn btn-danger"
-              value="Delete"
+            <ButtonUI
+              type="outlined"
               onClick={() => this.deleteHandler(val.id)}
-            />
+            >
+              Delete Item
+            </ButtonUI>
           </td>
         </tr>
       );
@@ -74,21 +75,64 @@ class Cart extends React.Component {
       });
   };
 
+  checkoutHandlder = () => {
+    const { cartData } = this.state;
+    return cartData.map((val, idx) => {
+      const { quantity, product } = val;
+      const totalPrice = quantity * product.price;
+      return (
+        <tr>
+          <td>{idx + 1}</td>
+          <td>{product.productName}</td>
+          <td>{quantity}</td>
+          <td>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR"
+            }).format(product.price)}
+          </td>
+          <td>
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR"
+            }).format(totalPrice)}
+          </td>
+        </tr>
+      );
+    });
+  };
+
   render() {
     return (
       <div className="container py-4">
         {this.state.cartData.length > 0 ? (
           <Table>
-            <thead>
+            <thead className="text-center">
               <tr>
                 <th>No</th>
-                <th colSpan="2">Product Name</th>
+                <th>Image</th>
+                <th>Product Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>{this.renderCart()}</tbody>
+            <tbody className="text-center">{this.renderCart()}</tbody>
+            <tfoot>
+              <tr>
+                <td colSpan={5}></td>
+                <td colSpan={1}>
+                  <Link to="/checkout">
+                    <ButtonUI
+                      // onClick={this.checkoutModal}
+                      type="contained"
+                    >
+                      CheckOut
+                    </ButtonUI>
+                  </Link>
+                </td>
+              </tr>
+            </tfoot>
           </Table>
         ) : (
           <Alert>

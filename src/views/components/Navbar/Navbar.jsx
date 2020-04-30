@@ -22,7 +22,11 @@ const CircleBg = ({ children }) => {
 class Navbar extends React.Component {
   state = {
     searchBarIsFocused: false,
-    searcBarInput: ""
+    searchBarInput: ""
+  };
+
+  inputHandler = (e, field) => {
+    this.setState({ [field]: e.target.value });
   };
 
   onFocus = () => {
@@ -55,6 +59,7 @@ class Navbar extends React.Component {
             }`}
             type="text"
             placeholder="Cari produk impianmu disini"
+            onChange={e => this.inputHandler(e, "searchBarInput")}
           />
         </div>
         <div className="d-flex flex-row align-items-center">
