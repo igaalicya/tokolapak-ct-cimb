@@ -7,11 +7,28 @@
       "id": 1
     },
     {
+      "username": "iga2",
+      "fullName": "alicya",
+      "password": "123",
+      "email": "igaalicya2@gmail.com",
+      "role": "user",
+      "id": 2
+    },
+    {
       "username": "iga3",
       "fullName": "alicya",
       "password": "123",
-      "email": "igaalicya",
-      "id": 2
+      "email": "igaalicya3@gmail.com",
+      "role": "user",
+      "id": 3
+    },
+    {
+      "username": "admin",
+      "fullName": "Super Admin",
+      "password": "123",
+      "email": "admin@gmail.com",
+      "role": "admin",
+      "id": 4
     }
   ],
   "products": [
@@ -26,7 +43,7 @@
     {
       "productName": "iPad Pro 3",
       "price": 15000000,
-      "category": "Tablet",
+      "category": "Tab",
       "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-pro-11-select-cell-spacegray-201810.png",
       "desc": "HP Terbaikk loh",
       "id": 2
@@ -38,6 +55,46 @@
       "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/m/b/mbp15touch-silver-select-cto-201807_3_1.jpeg",
       "desc": "HP Terbaikk loh",
       "id": 3
+    },
+    {
+      "productName": "Ipad Gen 7",
+      "price": "1000000",
+      "category": "Tab",
+      "image": "https://ibox.co.id/media/wysiwyg/iPad/iPad7/ipad7_02-min.png",
+      "desc": "ipad ipad ",
+      "id": 4
+    },
+    {
+      "productName": "iPhone 11 Pro Max",
+      "price": "20000000",
+      "category": "Phone",
+      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
+      "desc": "iPhone maxxxx",
+      "id": 5
+    },
+    {
+      "productName": "iPad gen 7",
+      "price": "200000",
+      "category": "Tab",
+      "image": "https://ibox.co.id/media/wysiwyg/iPad/iPad7/ipad7_02-min.png",
+      "desc": "ipad lagi",
+      "id": 6
+    },
+    {
+      "productName": "iPaddddd",
+      "price": "30000000",
+      "category": "Tab",
+      "image": "https://ibox.co.id/media/wysiwyg/iPad/iPad7/ipad7_02-min.png",
+      "desc": "ipad coba",
+      "id": 7
+    },
+    {
+      "productName": "iPad 7",
+      "price": "753498938539",
+      "category": "Tab",
+      "image": "https://ibox.co.id/media/wysiwyg/iPad/iPad7/ipad7_02-min.png",
+      "desc": "daklsjdk",
+      "id": 8
     }
   ],
   "carts": [
@@ -55,9 +112,33 @@
     },
     {
       "userId": 1,
+      "productId": 2,
+      "quantity": 1,
+      "id": 4
+    },
+    {
+      "userId": 1,
       "productId": 3,
       "quantity": 1,
       "id": 5
+    }
+  ],
+  "transaction": [
+    {
+      "userId": 1,
+      "totalPrice": 1000000,
+      "status": "pending",
+      "items": [
+        {
+          "productName": "iPaddddd",
+          "price": "30000000",
+          "category": "Tab",
+          "image": "https://ibox.co.id/media/wysiwyg/iPad/iPad7/ipad7_02-min.png",
+          "desc": "ipad coba",
+          "id": 7
+        }
+      ],
+      "id": 1
     }
   ]
 }

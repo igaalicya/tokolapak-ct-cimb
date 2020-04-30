@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { Table, Alert } from "reactstrap";
 import "./Cart.css";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
@@ -74,28 +76,25 @@ class Cart extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <h2 className="mt-5 text-center">Cart List</h2>
-        <table className="table text-center mt-4">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th colSpan="2">Nama Product</th>
-              <th>Harga</th>
-              <th>Quantity</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          {this.state.cartData.length != 0 ? (
-            <tbody>{this.renderCart()}</tbody>
-          ) : (
-            <tbody>
+      <div className="container py-4">
+        {this.state.cartData.length > 0 ? (
+          <Table>
+            <thead>
               <tr>
-                <td colSpan="6">Cart Kosong! silahkan belanja</td>
+                <th>No</th>
+                <th colSpan="2">Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Action</th>
               </tr>
-            </tbody>
-          )}
-        </table>
+            </thead>
+            <tbody>{this.renderCart()}</tbody>
+          </Table>
+        ) : (
+          <Alert>
+            Your cart is empty! <Link to="/">Go shopping</Link>
+          </Alert>
+        )}
       </div>
     );
   }

@@ -87,7 +87,7 @@ export const registerHandler = userData => {
           });
           swal("Gagal", "Username sudah digunakan", "error");
         } else {
-          Axios.post(`${API_URL}/users`, userData)
+          Axios.post(`${API_URL}/users`, { ...userData, role: "user" })
             .then(res => {
               console.log(res.data);
               dispatch({
