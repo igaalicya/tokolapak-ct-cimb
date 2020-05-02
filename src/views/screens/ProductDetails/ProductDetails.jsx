@@ -26,7 +26,8 @@ class ProductDetails extends React.Component {
     // console.log(this.props.user.id);
     Axios.get(`${API_URL}/carts`, {
       params: {
-        productId: this.state.productData.id
+        productId: this.state.productData.id,
+        userId: this.props.user.id
       }
     }).then(res => {
       if (res.data.length > 0) {
@@ -63,7 +64,7 @@ class ProductDetails extends React.Component {
           });
       }
     });
-    // console.log(this.state.productData.id);
+    console.log(this.state.productData.id);
   };
 
   componentDidMount() {

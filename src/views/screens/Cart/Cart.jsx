@@ -1,15 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Table, Alert, Modal } from "reactstrap";
+import { Table, Alert, Modal, ModalBody, ModalHeader } from "reactstrap";
 import "./Cart.css";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
 import ButtonUI from "../../components/Button/Button";
+import swal from "sweetalert";
 
 class Cart extends React.Component {
   state = {
-    cartData: []
+    cartData: [],
+    modalOpen: false,
+    checkoutData: {
+      userId: 0,
+      totalPrice: 0,
+      status: "pending",
+      items: []
+    }
   };
 
   componentDidMount() {
@@ -17,6 +25,8 @@ class Cart extends React.Component {
   }
 
   getCartData = () => {
+    let grandTotalPrice = 0;
+
     Axios.get(`${API_URL}/carts`, {
       params: {
         userId: this.props.user.id,
@@ -25,7 +35,21 @@ class Cart extends React.Component {
     })
       .then(res => {
         console.log(res.data);
-        this.setState({ cartData: res.data });
+        res.data.map(val => {
+          grandTotalPrice += val.quantity * val.product.price;
+        });
+
+        this.setState({
+          cartData: res.data,
+          checkoutData: {
+            ...this.state.checkoutData,
+            userId: this.props.user.id,
+            totalPrice: grandTotalPrice,
+            items: res.data
+          }
+        });
+
+        console.log(this.state.checkoutData.items);
       })
       .catch(err => {
         console.log(err);
@@ -75,31 +99,60 @@ class Cart extends React.Component {
       });
   };
 
+  checkoutBtnHandler = () => {
+    this.setState({
+      modalOpen: true
+    });
+  };
+
   checkoutHandlder = () => {
     const { cartData } = this.state;
+    let totalPrice;
     return cartData.map((val, idx) => {
       const { quantity, product } = val;
-      const totalPrice = quantity * product.price;
+      totalPrice = quantity * product.price;
       return (
-        <tr>
-          <td>{idx + 1}</td>
-          <td>{product.productName}</td>
-          <td>{quantity}</td>
-          <td>
-            {new Intl.NumberFormat("id-ID", {
-              style: "currency",
-              currency: "IDR"
-            }).format(product.price)}
-          </td>
-          <td>
-            {new Intl.NumberFormat("id-ID", {
-              style: "currency",
-              currency: "IDR"
-            }).format(totalPrice)}
-          </td>
-        </tr>
+        <>
+          <tr>
+            <td>{idx + 1}</td>
+            <td>{product.productName}</td>
+            <td>
+              {new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR"
+              }).format(product.price)}
+            </td>
+            <td>{quantity}</td>
+            <td>
+              {new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR"
+              }).format(totalPrice)}
+            </td>
+          </tr>
+        </>
       );
     });
+  };
+
+  confirmPayment = () => {
+    Axios.post(`${API_URL}/transaction`, this.state.checkoutData)
+      .then(res => {
+        console.log(res.data);
+        swal("Thank you!", "Your Transaction is Success", "success");
+        this.setState({ modalOpen: false });
+        // empty cart
+        this.state.cartData.map(val => {
+          return this.deleteHandler(val.id);
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  toggleModal = () => {
+    this.setState({ modalOpen: !this.state.modalOpen });
   };
 
   render() {
@@ -122,14 +175,9 @@ class Cart extends React.Component {
               <tr>
                 <td colSpan={5}></td>
                 <td colSpan={1}>
-                  <Link to="/checkout">
-                    <ButtonUI
-                      // onClick={this.checkoutModal}
-                      type="contained"
-                    >
-                      CheckOut
-                    </ButtonUI>
-                  </Link>
+                  <ButtonUI onClick={this.checkoutBtnHandler} type="contained">
+                    CheckOut
+                  </ButtonUI>
                 </td>
               </tr>
             </tfoot>
@@ -139,6 +187,62 @@ class Cart extends React.Component {
             Your cart is empty! <Link to="/">Go shopping</Link>
           </Alert>
         )}
+        <Modal
+          toggle={this.toggleModal}
+          isOpen={this.state.modalOpen}
+          size="lg"
+          centered
+        >
+          <ModalHeader toggle={this.toggleModal}>
+            <caption>
+              <h3>Checkout</h3>
+            </caption>
+          </ModalHeader>
+          <ModalBody>
+            <div className="row d-flex justify-content-center">
+              <div className="col-12 align-items-center">
+                <h5 className="mt-3">Customer : {this.props.user.fullName}</h5>
+                <Table centered className="mt-3">
+                  <thead>
+                    <th>No.</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                  </thead>
+                  <tbody>
+                    {this.checkoutHandlder()}
+                    <tr colSpan={5}>
+                      Subtotal :{" "}
+                      {new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR"
+                      }).format(this.state.checkoutData.totalPrice)}
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
+              <div className="col-3 mt-3 offset-1">
+                <ButtonUI
+                  className="w-100"
+                  onClick={this.toggleModal}
+                  type="outlined"
+                >
+                  Cancel
+                </ButtonUI>
+              </div>
+              <div className="col-3 mt-3">
+                <ButtonUI
+                  className="w-100"
+                  onClick={this.confirmPayment}
+                  type="contained"
+                >
+                  Cofirm
+                </ButtonUI>
+              </div>
+            </div>
+          </ModalBody>
+        </Modal>
       </div>
     );
   }

@@ -2,59 +2,50 @@
   "users": [
     {
       "username": "iga",
+      "fullName": "alicya",
       "password": "123",
-      "address": "Anarta",
+      "email": "igaalicya@gmail.com",
+      "role": "user",
       "id": 1
     },
     {
-<<<<<<< HEAD
       "username": "iga2",
       "fullName": "alicya",
       "password": "123",
       "email": "igaalicya2@gmail.com",
-=======
-      "username": "doraemon",
-      "fullName": "Dora Emon",
-      "password": "password",
-      "email": "doraemon@mail.com",
->>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
       "role": "user",
       "id": 2
     },
     {
-<<<<<<< HEAD
       "username": "iga3",
       "fullName": "alicya",
       "password": "123",
       "email": "igaalicya3@gmail.com",
-=======
-      "username": "pikachu",
-      "fullName": "Dora Emon",
-      "password": "password",
-      "email": "doraemon@mail.com",
->>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
       "role": "user",
       "id": 3
     },
     {
       "username": "admin",
       "fullName": "Super Admin",
-<<<<<<< HEAD
       "password": "123",
       "email": "admin@gmail.com",
-=======
-      "password": "password",
-      "email": "admin@mail.com",
->>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
       "role": "admin",
       "id": 4
+    },
+    {
+      "username": "iga4",
+      "fullName": "iga lagi",
+      "password": "123",
+      "email": "iga4@gmail.com",
+      "role": "user",
+      "id": 5
     }
   ],
   "products": [
     {
       "productName": "iPhone 7 +",
       "price": 5000000,
-      "category": "Tab",
+      "category": "Phone",
       "image": "https://ibox.co.id/media/wysiwyg/PromoOnline/web-banner---iphone-7-plus-rev.png",
       "desc": "HP Terbaikk loh",
       "id": 1
@@ -62,7 +53,7 @@
     {
       "productName": "iPad Pro 3",
       "price": 15000000,
-      "category": "Tab",
+      "category": "Phone",
       "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-pro-11-select-cell-spacegray-201810.png",
       "desc": "HP Terbaikk loh",
       "id": 2
@@ -76,7 +67,6 @@
       "id": 3
     },
     {
-<<<<<<< HEAD
       "productName": "Ipad Gen 7",
       "price": "1000000",
       "category": "Tab",
@@ -89,7 +79,7 @@
       "price": "20000000",
       "category": "Phone",
       "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
-      "desc": "iPhone maxxxx",
+      "desc": "iphone maxxxxx",
       "id": 5
     },
     {
@@ -110,98 +100,61 @@
     },
     {
       "productName": "iPad 7",
-      "price": "753498938539",
+      "price": "9000000",
       "category": "Tab",
       "image": "https://ibox.co.id/media/wysiwyg/iPad/iPad7/ipad7_02-min.png",
       "desc": "daklsjdk",
       "id": 8
-=======
-      "name": "iMac (2019)",
-      "price": "23000000",
-      "category": "Desktop",
-      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/m/imac-27-cto-hero-201903_1_1.jpeg",
-      "desc": "Desktop khusus para sultan gan.",
-      "id": 4,
-      "productName": "iMac (2019)"
-    },
-    {
-      "productName": "iPhone 11 Pro Max",
-      "price": "24000000",
-      "category": "",
-      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
-      "desc": "HP Kamera boba",
-      "id": 5
-    },
-    {
-      "productName": "iPhone 11 Max abis",
-      "price": "123123123",
-      "category": "Phone",
-      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
-      "desc": "asdasdasdsd",
-      "id": 6
-    },
-    {
-      "productName": "iPhone Max bet",
-      "price": "3132312",
-      "category": "Phone",
-      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
-      "desc": "asdasdasdadadad",
-      "id": 7
-    },
-    {
-      "productName": "iPad 7 ",
-      "price": "6000000",
-      "category": "Tab",
-      "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-wifi-select-space-201909_geo_us.png",
-      "desc": "iPad baru",
-      "id": 8
-    },
-    {
-      "productName": "OPPO Find X2 Pro",
-      "price": "5300000",
-      "category": "Phone",
-      "image": "https://image.oppo.com/content/dam/oppo/id/mkt/header/Compass-Pro%20orange-EN.png",
-      "desc": "Keluaran terbaru dari OPPO guys, STOCK TERBATAS!!",
-      "id": 9
->>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
     }
   ],
   "carts": [
     {
-      "userId": 2,
-      "productId": 2,
-      "quantity": 1,
-      "id": 2
+      "userId": 3,
+      "productId": 5,
+      "quantity": 14,
+      "id": 7
     },
     {
       "userId": 1,
       "productId": 1,
-      "quantity": 1,
-      "id": 3
+      "quantity": 2,
+      "id": 11
     },
     {
-<<<<<<< HEAD
-      "userId": 1,
-      "productId": 2,
-=======
-      "userId": 0,
-      "productId": 1,
->>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
-      "quantity": 1,
-      "id": 4
-    },
-    {
-<<<<<<< HEAD
       "userId": 1,
       "productId": 3,
       "quantity": 2,
-      "id": 5
+      "id": 12
     },
     {
-      "userId": 3,
+      "userId": 1,
+      "productId": 8,
+      "quantity": 1,
+      "id": 13
+    },
+    {
+      "userId": 1,
+      "productId": 4,
+      "quantity": 2,
+      "id": 14
+    },
+    {
+      "userId": 1,
       "productId": 5,
       "quantity": 1,
-      "id": 7
+      "id": 15
+    },
+    {
+      "userId": 1,
+      "productId": 2,
+      "quantity": 1,
+      "id": 16
+    },
+    {
+      "userId": 5,
+      "productId": 2,
+      "quantity": 1,
+      "id": 17
     }
   ],
   "transaction": [
@@ -220,18 +173,100 @@
         }
       ],
       "id": 1
-=======
-      "userId": 4,
-      "productId": 1,
-      "quantity": 1,
-      "id": 5
     },
     {
-      "userId": 4,
-      "productId": 1,
-      "quantity": 1,
-      "id": 6
->>>>>>> 508caeefe1de3177c3eb76aa793779a83e1dbb23
+      "userId": 2,
+      "totalPrice": 35000000,
+      "status": "pending",
+      "items": [
+        {
+          "userId": 2,
+          "productId": 2,
+          "quantity": 1,
+          "id": 17,
+          "product": {
+            "productName": "iPad Pro 3",
+            "price": 15000000,
+            "category": "Phone",
+            "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-pro-11-select-cell-spacegray-201810.png",
+            "desc": "HP Terbaikk loh",
+            "id": 2
+          }
+        },
+        {
+          "userId": 2,
+          "productId": 5,
+          "quantity": 1,
+          "id": 18,
+          "product": {
+            "productName": "iPhone 11 Pro Max",
+            "price": "20000000",
+            "category": "Phone",
+            "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
+            "desc": "iphone maxxxxx",
+            "id": 5
+          }
+        }
+      ],
+      "id": 2
+    },
+    {
+      "userId": 2,
+      "totalPrice": 20000000,
+      "status": "pending",
+      "items": [
+        {
+          "userId": 2,
+          "productId": 5,
+          "quantity": 1,
+          "id": 17,
+          "product": {
+            "productName": "iPhone 11 Pro Max",
+            "price": "20000000",
+            "category": "Phone",
+            "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-11-pro-max-midnight-green_3.png",
+            "desc": "iphone maxxxxx",
+            "id": 5
+          }
+        }
+      ],
+      "id": 3
+    },
+    {
+      "userId": 2,
+      "totalPrice": 16000000,
+      "status": "pending",
+      "items": [
+        {
+          "userId": 2,
+          "productId": 4,
+          "quantity": 1,
+          "id": 17,
+          "product": {
+            "productName": "Ipad Gen 7",
+            "price": "1000000",
+            "category": "Tab",
+            "image": "https://ibox.co.id/media/wysiwyg/iPad/iPad7/ipad7_02-min.png",
+            "desc": "ipad ipad ",
+            "id": 4
+          }
+        },
+        {
+          "userId": 2,
+          "productId": 2,
+          "quantity": 1,
+          "id": 18,
+          "product": {
+            "productName": "iPad Pro 3",
+            "price": 15000000,
+            "category": "Phone",
+            "image": "https://ibox.co.id/media/catalog/product/cache/3/image/9df78eab33525d08d6e5fb8d27136e95/i/p/ipad-pro-11-select-cell-spacegray-201810.png",
+            "desc": "HP Terbaikk loh",
+            "id": 2
+          }
+        }
+      ],
+      "id": 4
     }
   ]
 }

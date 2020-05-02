@@ -9,7 +9,9 @@ const init_state = {
   address: {},
   role: "",
   errMsg: "",
-  cookieChecked: false
+  cookieChecked: false,
+  searchInput: "",
+  itemInCart: 0
 };
 
 export default (state = init_state, action) => {
@@ -32,6 +34,8 @@ export default (state = init_state, action) => {
       return { ...init_state, cookieChecked: true };
     case "COOKIE_CHECK":
       return { ...state, cookieChecked: true };
+    case "SEARCH_PRODUCT":
+      return { ...state, searchInput: action.payload, cookieChecked: true };
     default:
       return { ...state };
   }

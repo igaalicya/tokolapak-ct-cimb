@@ -112,3 +112,29 @@ export const cookieChecker = () => {
     type: "COOKIE_CHECK"
   };
 };
+
+export const searchProductHandler = searchInput => {
+  return {
+    type: "SEARCH_PRODUCT",
+    payload: searchInput
+  };
+};
+
+export const numberOfItemInCart = userData => {
+  return dispatch => {
+    Axios.get(`${API_URL}/carts`, {
+      params: {
+        userId: userData.id
+      }
+    })
+      .then(res => {
+        dispatch({
+          type: "NUMBER_ITEM_IN_CART",
+          payload: res.data.length
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};

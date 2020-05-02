@@ -15,7 +15,13 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import "./Navbar.css";
 import ButtonUI from "../Button/Button";
-import { logoutHandler } from "../../../redux/actions";
+import {
+  logoutHandler,
+  searchProductHandler,
+  numberOfItemInCart
+} from "../../../redux/actions";
+import Axios from "axios";
+import { API_URL } from "../../../constants/API";
 
 import Cookie from "universal-cookie";
 const cookieObject = new Cookie();
@@ -28,7 +34,8 @@ class Navbar extends React.Component {
   state = {
     searchBarIsFocused: false,
     searcBarInput: "",
-    dropdownOpen: false
+    dropdownOpen: false,
+    numberOfItem: 0
   };
 
   inputHandler = (e, field) => {
@@ -47,6 +54,26 @@ class Navbar extends React.Component {
     this.props.onLogout();
     // this.forceUpdate();
   };
+
+  numberOfItemInCart = () => {
+    Axios.get(`${API_URL}/carts`, {
+      params: {
+        userId: this.props.user.id,
+        _expand: "product"
+      }
+    })
+      .then(res => {
+        console.log(res.data);
+        this.setState({ numberOfItem: res.data.length });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  componentDidMount() {
+    this.numberOfItemInCart();
+  }
 
   toggleDropdown = () => {
     this.setState({ dropdownOpen: !this.state.dropdownOpen });
@@ -72,7 +99,9 @@ class Navbar extends React.Component {
             }`}
             type="text"
             placeholder="Cari produk impianmu disini"
-            onChange={e => this.inputHandler(e, "searchBarInput")}
+            onChange={e => {
+              this.props.searchProduct(e.target.value);
+            }}
           />
         </div>
         <div className="d-flex flex-row align-items-center">
@@ -111,7 +140,7 @@ class Navbar extends React.Component {
                 />
                 <CircleBg>
                   <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
-                    4
+                    {this.state.numberOfItem}
                   </small>
                 </CircleBg>
                 <Link
@@ -162,6 +191,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  onLogout: logoutHandler
+  onLogout: logoutHandler,
+  searchProduct: searchProductHandler,
+  numberOfItemInCart
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
