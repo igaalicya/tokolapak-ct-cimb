@@ -1,7 +1,7 @@
 ## Project Akhir
 
-VROME (vaccine right at home)
-website yang menyediakan jasa vaksin di rumah
+VROME (vaccine right at home) <br />
+website yang menyediakan jasa vaksin di rumah<br />
 dokter/ tenaga medis akan datang ke rumah untuk melakukan vaksinasi
 
 ### - user
