@@ -90,22 +90,22 @@ class AdminPayment extends React.Component {
                 }).format(grandTotalPrice)}{" "}
               </td>
               <td>{status}</td>
-              <td>
+              {/* <td>
                 {" "}
-                {/* <ButtonUI
+                <ButtonUI
                   onClick={() => this.confirmPayment(id)}
                   className="w-80"
                   type="outlined"
                 >
                   Confirm Payment
-                </ButtonUI> */}
+                </ButtonUI>
                 <input
                   type="button"
                   className="btn btn-primary"
                   value="Confirm Payment"
                   disabled
                 />
-              </td>
+              </td> */}
             </tr>
             <tr
               className={`collapse-item ${
@@ -122,18 +122,6 @@ class AdminPayment extends React.Component {
                         <span style={{ fontWeight: "normal" }}>
                           {" "}
                           {transactionDate}
-                        </span>
-                      </h6>
-                      <h6>
-                        Price:
-                        <span
-                          style={{ fontWeight: "normal" }}
-                          className="text-justify"
-                        >
-                          {new Intl.NumberFormat("id-ID", {
-                            style: "currency",
-                            currency: "IDR"
-                          }).format(grandTotalPrice)}
                         </span>
                       </h6>
                       <h6>
@@ -202,11 +190,11 @@ class AdminPayment extends React.Component {
                 }).format(grandTotalPrice)}{" "}
               </td>
               <td>{status}</td>
-              <td>
+              <td className="align-text-center">
                 {" "}
                 <ButtonUI
                   onClick={() => this.confirmPayment(id)}
-                  className="w-80"
+                  className="w-80 "
                   type="contained"
                 >
                   Confirm Payment
@@ -331,7 +319,7 @@ class AdminPayment extends React.Component {
                 <th>User ID</th>
                 <th>Total Price</th>
                 <th>Status</th>
-                <th>Action</th>
+                {this.state.activePage == "pending" ? <th>Action</th> : null}
               </tr>
             </thead>
             <tbody>{this.renderTransactionList()}</tbody>

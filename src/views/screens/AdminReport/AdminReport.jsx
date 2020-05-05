@@ -2,43 +2,53 @@ import React, { Component } from "react";
 import "./AdminReport.css";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
-import ButtonUI from "../../components/Button/Button";
-import TextField from "../../components/TextField/TextField";
-import swal from "sweetalert";
+import { Table } from "reactstrap";
 
 class AdminReport extends Component {
   state = {
     transactionList: [],
-    modalOpen: false,
-    dateCalendar: new Date(),
-    reportDataUser: []
+    product: [],
+    listUser: []
   };
 
-  getTransactionList = () => {
-    Axios.get(`${API_URL}/transactions`, {
+  componentDidMount() {
+    this.getReportDataUser();
+    this.getReportDataProduct();
+  }
+
+  getReportDataUser = () => {
+    Axios.get(`${API_URL}/users`, {
       params: {
-        status: "completed"
+        // userId,
+        role: "user",
+        _embed: "transactions"
       }
     })
       .then(res => {
-        this.setState({ transactionList: res.data });
-        console.log(res.data);
+        this.setState({ listUser: res.data });
+        // console.log(res.data);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  getReportDataUser = () => {
-    Axios.get(`${API_URL}/transactions`, {
+  getReportDataProduct = () => {
+    Axios.get(`${API_URL}/products`, {
       params: {
-        status: "completed",
-        _embed: "transactionDetails"
+        _embed: "transactions"
       }
     })
       .then(res => {
-        this.setState({ reportDataUser: res.data });
-        console.log(`${res.data}`);
+        console.log(res.data);
+        this.setState({ product: res.data });
+        this.state.product.map(val => {
+          Axios.get(`${API_URL}/transactions`, {
+            params: {
+              _embed: "transactionsDetails"
+            }
+          });
+        });
       })
       .catch(err => {
         console.log(err);
@@ -46,19 +56,24 @@ class AdminReport extends Component {
   };
 
   renderReportUser = () => {
-    // console.log(valUser.productName);
-    console.log(this.state.reportDataUser);
-    return this.state.reportDataUser.map((val, idx) => {
-      const { id, userId, transactionDetails } = val;
-
+    const { listUser } = this.state;
+    return listUser.map(val => {
+      let totalShopping = 0;
       return (
-        <>
-          <tr className="text-center">
-            <td> {idx + 1} </td>
-            <td> {userId} </td>
-            <td></td>{" "}
-          </tr>
-        </>
+        <tr className="text-center">
+          <td>{val.id}</td>
+          <td>{val.fullName}</td>
+          <td>
+            {val.transactions.map(value => {
+              if (value.userId == val.id) {
+                totalShopping = totalShopping + parseInt(value.grandTotalPrice);
+              } else {
+                totalShopping = 0;
+              }
+            })}
+            {totalShopping}
+          </td>
+        </tr>
       );
     });
   };
@@ -66,10 +81,6 @@ class AdminReport extends Component {
   toggleModal = () => {
     this.setState({ modalOpen: !this.state.modalOpen });
   };
-
-  componentDidMount() {
-    this.getReportDataUser();
-  }
 
   render() {
     return (
@@ -82,7 +93,7 @@ class AdminReport extends Component {
             <thead>
               <tr className="text-center">
                 <th>No.</th>
-                <th>User ID</th>
+                <th>Fullname</th>
                 <th>Transaction</th>
               </tr>
             </thead>
@@ -101,7 +112,7 @@ class AdminReport extends Component {
                 <th>Jumlah</th>
               </tr>
             </thead>
-            <tbody>{this.renderReportUser()}</tbody>
+            {/* <tbody>{this.renderReportProduct()}</tbody> */}
           </table>
         </div>
       </div>

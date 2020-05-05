@@ -42,7 +42,6 @@ class ProductDetails extends React.Component {
               "Your item has been added to your cart",
               "success"
             );
-            this.props.numberOfItemInCart(this.props.user.id);
             console.log(res);
           })
           .catch(err => {
@@ -61,7 +60,10 @@ class ProductDetails extends React.Component {
               "Your item has been added to your cart",
               "success"
             );
+
+            this.props.numberOfItemInCart(this.props.user.id);
           })
+
           .catch(err => {
             console.log(err);
           });

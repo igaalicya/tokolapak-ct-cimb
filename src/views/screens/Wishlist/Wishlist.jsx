@@ -6,6 +6,7 @@ import Axios from "axios";
 import { API_URL } from "../../../constants/API";
 import ButtonUI from "../../components/Button/Button";
 import swal from "sweetalert";
+import { countCartHandler } from "../../../redux/actions";
 
 class Wishlist extends React.Component {
   state = {
@@ -14,6 +15,7 @@ class Wishlist extends React.Component {
 
   componentDidMount() {
     this.getWishlistData();
+    this.props.numberOfItemInCart(this.props.user.id);
   }
 
   getWishlistData = () => {
@@ -128,6 +130,7 @@ class Wishlist extends React.Component {
               "Your item has been added to your cart",
               "success"
             );
+            this.props.numberOfItemInCart(this.props.user.id);
           })
           .catch(err => {
             console.log(err);
@@ -167,8 +170,13 @@ class Wishlist extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    cart: state.cart
   };
 };
 
-export default connect(mapStateToProps)(Wishlist);
+const mapDispatchToProps = {
+  numberOfItemInCart: countCartHandler
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wishlist);

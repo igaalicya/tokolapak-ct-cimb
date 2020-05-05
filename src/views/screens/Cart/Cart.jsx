@@ -14,7 +14,7 @@ class Cart extends React.Component {
     dateCalendar: new Date(),
     cartData: [],
     modalOpen: false,
-    // nyimpan id tranasctions
+    // nyimpan id transac
     id: 0,
     checkoutData: {
       userId: 0,
@@ -32,18 +32,11 @@ class Cart extends React.Component {
     this.deliveryCostHandler();
   };
 
-  // inputDelivery = e => {
-  //   this.setState({ deliveryCost: parseInt(e.target.value) });
-  // };
-
   componentDidMount() {
     this.getCartData();
     this.deliveryCostHandler();
+    this.props.numberOfItemInCart(this.props.user.id);
   }
-
-  // componentDidUpdate() {
-  //   this.deliveryCostHandler(this.state.delivery);
-  // }
 
   getCartData = () => {
     let grandTotalPrice = 0;
@@ -80,14 +73,6 @@ class Cart extends React.Component {
     return this.state.cartData.map((val, idx) => {
       return (
         <tr>
-          {/* <td>
-            {" "}
-            <input
-              type="checkbox"
-              onChange={e => this.checkboxHandler(e, idx)}
-              className="form-control"
-            />{" "}
-          </td> */}
           <td>{idx + 1}</td>
           <td>
             <img
@@ -121,6 +106,8 @@ class Cart extends React.Component {
       .then(res => {
         console.log(res);
         this.getCartData();
+
+        this.props.numberOfItemInCart(this.props.user.id);
       })
       .catch(err => {
         console.log("gagal");
@@ -249,22 +236,22 @@ class Cart extends React.Component {
             <tbody className="text-center">{this.renderCart()}</tbody>
             <tfoot>
               <tr>
-                <td colSpan={3}>
-                  <tr>
-                    Pilih jenis pengiriman :
-                    <select
-                      value={this.state.delivery}
-                      className="custom-text-input h-100 pl-3"
-                      onChange={e => this.inputHandler(e, "delivery")}
-                    >
-                      <option value="100000">Instant</option>
-                      <option value="50000">SameDay</option>
-                      <option value="20000">Express</option>
-                      <option value="0">Economy</option>
-                    </select>
-                  </tr>
-                </td>
                 <td colSpan={2}></td>
+                <td colSpan={1} className="text-right">
+                  Pilih jenis pengiriman :
+                </td>
+                <td colSpan={2}>
+                  <select
+                    value={this.state.delivery}
+                    className="custom-text-input h-100 pl-3"
+                    onChange={e => this.inputHandler(e, "delivery")}
+                  >
+                    <option value="100000">Instant</option>
+                    <option value="50000">SameDay</option>
+                    <option value="20000">Express</option>
+                    <option value="0">Economy</option>
+                  </select>
+                </td>
                 <td colSpan={1}>
                   <ButtonUI onClick={this.checkoutBtnHandler} type="contained">
                     CheckOut
@@ -323,8 +310,8 @@ class Cart extends React.Component {
                         currency: "IDR"
                       }).format(this.state.delivery)}
                     </tr>
-                    <tr colSpan={2}>
-                      Subtotal :{" "}
+                    <tr colSpan={3}>
+                      Subtotal :
                       {new Intl.NumberFormat("id-ID", {
                         style: "currency",
                         currency: "IDR"

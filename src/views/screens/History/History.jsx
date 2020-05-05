@@ -24,8 +24,8 @@ class History extends React.Component {
     Axios.get(`${API_URL}/transactions`, {
       params: {
         userId: this.props.user.id,
-        status: "completed"
-        // _embed: "transacyionDetail"
+        status: "completed",
+        _embed: "transactionDetail"
         // _expand: "users"
       }
     })
@@ -57,7 +57,8 @@ class History extends React.Component {
         grandTotalPrice,
         status,
         transactionDate,
-        CompletionDate
+        CompletionDate,
+        transactionDetails
       } = val;
       return (
         <>
@@ -112,18 +113,6 @@ class History extends React.Component {
                       </span>
                     </h6>
                     <h6>
-                      Price:
-                      <span
-                        style={{ fontWeight: "normal" }}
-                        className="text-justify"
-                      >
-                        {new Intl.NumberFormat("id-ID", {
-                          style: "currency",
-                          currency: "IDR"
-                        }).format(grandTotalPrice)}
-                      </span>
-                    </h6>
-                    <h6>
                       Completion Date:
                       <span
                         style={{ fontWeight: "normal" }}
@@ -133,12 +122,15 @@ class History extends React.Component {
                       </span>
                     </h6>
                     <h6>
-                      Total Price:
+                      Price:
                       <span
                         style={{ fontWeight: "normal" }}
                         className="text-justify"
                       >
-                        {grandTotalPrice}
+                        {new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR"
+                        }).format(grandTotalPrice)}
                       </span>
                     </h6>
                   </div>
