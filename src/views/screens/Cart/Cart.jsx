@@ -23,16 +23,22 @@ class Cart extends React.Component {
       transactionDate: "",
       completionDate: ""
     },
-    delivery: "",
+    delivery: 0,
     deliveryCost: 0
   };
 
   inputHandler = (e, field) => {
     this.setState({ [field]: e.target.value });
+    this.deliveryCostHandler();
   };
+
+  // inputDelivery = e => {
+  //   this.setState({ deliveryCost: parseInt(e.target.value) });
+  // };
 
   componentDidMount() {
     this.getCartData();
+    this.deliveryCostHandler();
   }
 
   // componentDidUpdate() {
@@ -59,7 +65,7 @@ class Cart extends React.Component {
           checkoutData: {
             ...this.state.checkoutData,
             userId: this.props.user.id,
-            grandTotalPrice: grandTotalPrice + this.state.deliveryCost,
+            grandTotalPrice: grandTotalPrice + +this.state.delivery,
             transactionDate: this.state.dateCalendar.toLocaleDateString()
             // items: res.data
           }
@@ -121,14 +127,14 @@ class Cart extends React.Component {
       });
   };
 
-  deliveryCostHandler = deliveryMethod => {
-    if (deliveryMethod == "instant") {
+  deliveryCostHandler = () => {
+    if (this.state.delivery == "instant") {
       this.setState({ deliveryCost: 100000 });
-    } else if (deliveryMethod == "sameday") {
+    } else if (this.state.delivery == "sameday") {
       this.setState({ deliveryCost: 50000 });
-    } else if (deliveryMethod == "express") {
+    } else if (this.state.delivery == "express") {
       this.setState({ deliveryCost: 20000 });
-    } else if (deliveryMethod == "economy") {
+    } else if (this.state.delivery == "economy") {
       this.setState({ deliveryCost: 0 });
     }
   };
@@ -141,6 +147,7 @@ class Cart extends React.Component {
 
   checkoutHandlder = () => {
     console.log(this.state.deliveryCost);
+    console.log(this.state.delivery);
     const { cartData } = this.state;
     let totalPrice;
     return cartData.map((val, idx) => {
@@ -242,7 +249,22 @@ class Cart extends React.Component {
             <tbody className="text-center">{this.renderCart()}</tbody>
             <tfoot>
               <tr>
-                <td colSpan={5}></td>
+                <td colSpan={3}>
+                  <tr>
+                    Pilih jenis pengiriman :
+                    <select
+                      value={this.state.delivery}
+                      className="custom-text-input h-100 pl-3"
+                      onChange={e => this.inputHandler(e, "delivery")}
+                    >
+                      <option value="100000">Instant</option>
+                      <option value="50000">SameDay</option>
+                      <option value="20000">Express</option>
+                      <option value="0">Economy</option>
+                    </select>
+                  </tr>
+                </td>
+                <td colSpan={2}></td>
                 <td colSpan={1}>
                   <ButtonUI onClick={this.checkoutBtnHandler} type="contained">
                     CheckOut
@@ -281,24 +303,35 @@ class Cart extends React.Component {
                   </thead>
                   <tbody>
                     {this.checkoutHandlder()}
-                    <tr>
+                    {/* <tr>
+                      Pilih jenis pengiriman :
                       <select
                         value={this.state.delivery}
                         className="custom-text-input h-100 pl-3"
-                        onChange={this.deliveryCostHandler}
+                        onChange={e => this.inputHandler(e, "delivery")}
                       >
-                        <option value="instant">Instant</option>
+                        <option value="100000">Instant</option>
                         <option value="50000">SameDay</option>
                         <option value="20000">Express</option>
                         <option value="0">Economy</option>
                       </select>
+                    </tr> */}
+                    <tr colSpan={2}>
+                      Delivery Cost :{" "}
+                      {new Intl.NumberFormat("id-ID", {
+                        style: "currency",
+                        currency: "IDR"
+                      }).format(this.state.delivery)}
                     </tr>
-                    <tr colSpan={5}>
+                    <tr colSpan={2}>
                       Subtotal :{" "}
                       {new Intl.NumberFormat("id-ID", {
                         style: "currency",
                         currency: "IDR"
-                      }).format(this.state.checkoutData.grandTotalPrice)}
+                      }).format(
+                        this.state.checkoutData.grandTotalPrice +
+                          +this.state.delivery
+                      )}
                     </tr>
                   </tbody>
                 </Table>
@@ -312,6 +345,7 @@ class Cart extends React.Component {
                   Cancel
                 </ButtonUI>
               </div>
+
               <div className="col-3 mt-3">
                 <ButtonUI
                   className="w-100"

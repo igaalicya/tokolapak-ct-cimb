@@ -14,10 +14,26 @@ class AdminReport extends Component {
     reportDataUser: []
   };
 
+  getTransactionList = () => {
+    Axios.get(`${API_URL}/transactions`, {
+      params: {
+        status: "completed"
+      }
+    })
+      .then(res => {
+        this.setState({ transactionList: res.data });
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   getReportDataUser = () => {
     Axios.get(`${API_URL}/transactions`, {
       params: {
-        _expand: "user"
+        status: "completed",
+        _embed: "transactionDetails"
       }
     })
       .then(res => {
@@ -30,62 +46,21 @@ class AdminReport extends Component {
   };
 
   renderReportUser = () => {
+    // console.log(valUser.productName);
     console.log(this.state.reportDataUser);
     return this.state.reportDataUser.map((val, idx) => {
-      const {
-        id,
-        userId,
-        totalPrice,
-        status,
-        transactionDate,
-        CompletionDate
-      } = val;
+      const { id, userId, transactionDetails } = val;
 
       return (
         <>
           <tr className="text-center">
             <td> {idx + 1} </td>
             <td> {userId} </td>
-            <td> {transactionDate} </td>
-            <td> {CompletionDate} </td>
-            <td>
-              {" "}
-              {new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR"
-              }).format(totalPrice)}{" "}
-            </td>
-            <td>{status}</td>
-            <td>
-              {" "}
-              <ButtonUI
-                onClick={() => this.confirmPayment(id)}
-                className="w-80"
-                type="contained"
-              >
-                Confirm Payment
-              </ButtonUI>
-            </td>
+            <td></td>{" "}
           </tr>
         </>
       );
     });
-  };
-
-  confirmPayment = id => {
-    Axios.patch(`${API_URL}/transactions/${id}`, {
-      status: "completed",
-      CompletionDate: this.state.dateCalendar.toLocaleDateString()
-    })
-
-      .then(res => {
-        swal("Success!", "The Transaction has been confirmed", "success");
-        this.getTransactionList();
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    console.log(` tgl ${this.state.dateCalendar.toLocaleDateString()}`);
   };
 
   toggleModal = () => {
@@ -101,21 +76,32 @@ class AdminReport extends Component {
       <div className="container py-4">
         <div className="dashboard">
           <caption className="p-3">
-            <h2>Payment</h2>
+            <h2>User Report</h2>
           </caption>
           <table className="dashboard-table">
             <thead>
               <tr className="text-center">
                 <th>No.</th>
                 <th>User ID</th>
-                <th>Transaction Date</th>
-                <th>Completion Date</th>
-                <th>Total Price</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>Transaction</th>
               </tr>
             </thead>
-            <tbody>{this.renderTransactionList()}</tbody>
+            <tbody>{this.renderReportUser()}</tbody>
+          </table>
+          <br />
+          <br />
+          <caption className="p-3">
+            <h2>Product Report</h2>
+          </caption>
+          <table className="dashboard-table">
+            <thead>
+              <tr className="text-center">
+                <th>No.</th>
+                <th>Nama Product</th>
+                <th>Jumlah</th>
+              </tr>
+            </thead>
+            <tbody>{this.renderReportUser()}</tbody>
           </table>
         </div>
       </div>
