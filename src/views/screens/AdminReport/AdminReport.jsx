@@ -45,7 +45,7 @@ class AdminReport extends Component {
         this.state.product.map(val => {
           Axios.get(`${API_URL}/transactions`, {
             params: {
-              _embed: "transactionsDetails"
+              // _embed: "transactionsDetails"
             }
           });
         });
@@ -78,8 +78,17 @@ class AdminReport extends Component {
     });
   };
 
-  toggleModal = () => {
-    this.setState({ modalOpen: !this.state.modalOpen });
+  renderReportProduct = () => {
+    const { product } = this.state;
+    return product.map(val => {
+      return (
+        <tr className="text-center">
+          <td>{val.id}</td>
+          <td>{val.productName}</td>
+          <td></td>
+        </tr>
+      );
+    });
   };
 
   render() {
@@ -112,7 +121,7 @@ class AdminReport extends Component {
                 <th>Jumlah</th>
               </tr>
             </thead>
-            {/* <tbody>{this.renderReportProduct()}</tbody> */}
+            <tbody>{this.renderReportProduct()}</tbody>
           </table>
         </div>
       </div>
