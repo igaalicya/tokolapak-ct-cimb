@@ -34,7 +34,7 @@ class ProductCard extends React.Component<ProductCardProps> {
           <h5 style={{ fontWeight: "bolder" }}>
             {new Intl.NumberFormat("id-ID", {
               style: "currency",
-              currency: "IDR",
+              currency: "IDR"
             }).format(price)}
           </h5>
           <p className="small">Jakarta Selatan</p>
@@ -53,7 +53,7 @@ class ProductCard extends React.Component<ProductCardProps> {
           </div>
           <ButtonUI
             type="outlined"
-            style={{ fontSize: "12px", padding: "4px 8px" }} onClick=""
+            style={{ fontSize: "12px", padding: "4px 8px" }}
           >
             {" "}
             <FontAwesomeIcon icon={faHeart} /> Add to wishlist

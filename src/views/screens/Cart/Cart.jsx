@@ -7,17 +7,28 @@ import Axios from "axios";
 import { API_URL } from "../../../constants/API";
 import ButtonUI from "../../components/Button/Button";
 import swal from "sweetalert";
+import { countCartHandler } from "../../../redux/actions";
 
 class Cart extends React.Component {
   state = {
+    dateCalendar: new Date(),
     cartData: [],
     modalOpen: false,
+    // nyimpan id tranasctions
+    id: 0,
     checkoutData: {
       userId: 0,
-      totalPrice: 0,
+      grandTotalPrice: 0,
       status: "pending",
-      items: []
-    }
+      transactionDate: "",
+      completionDate: ""
+    },
+    delivery: "",
+    deliveryCost: 0
+  };
+
+  inputHandler = (e, field) => {
+    this.setState({ [field]: e.target.value });
   };
 
   componentDidMount() {
@@ -44,12 +55,11 @@ class Cart extends React.Component {
           checkoutData: {
             ...this.state.checkoutData,
             userId: this.props.user.id,
-            totalPrice: grandTotalPrice,
-            items: res.data
+            grandTotalPrice: grandTotalPrice + this.state.deliveryCost,
+            transactionDate: this.state.dateCalendar.toLocaleDateString()
+            // items: res.data
           }
         });
-
-        console.log(this.state.checkoutData.items);
       })
       .catch(err => {
         console.log(err);
@@ -60,6 +70,14 @@ class Cart extends React.Component {
     return this.state.cartData.map((val, idx) => {
       return (
         <tr>
+          {/* <td>
+            {" "}
+            <input
+              type="checkbox"
+              onChange={e => this.checkboxHandler(e, idx)}
+              className="form-control"
+            />{" "}
+          </td> */}
           <td>{idx + 1}</td>
           <td>
             <img
@@ -136,15 +154,31 @@ class Cart extends React.Component {
   };
 
   confirmPayment = () => {
-    Axios.post(`${API_URL}/transaction`, this.state.checkoutData)
+    Axios.post(`${API_URL}/transactions`, this.state.checkoutData)
       .then(res => {
-        console.log(res.data);
-        swal("Thank you!", "Your Transaction is Success", "success");
-        this.setState({ modalOpen: false });
-        // empty cart
         this.state.cartData.map(val => {
-          return this.deleteHandler(val.id);
+          Axios.post(`${API_URL}/transactionDetails`, {
+            transactionId: res.data.id,
+            productId: val.productId,
+            price: val.product.price,
+            quantity: val.quantity,
+            totalPrice: val.product.price * val.quantity
+          })
+            .then(res => {
+              console.log(res);
+              swal("Thank you!", "Your Transaction is Success", "success");
+              this.setState({ modalOpen: false });
+              // empty cart
+              this.state.cartData.map(val => {
+                return this.deleteHandler(val.id);
+              });
+            })
+            .catch(err => {
+              console.log(err);
+            });
         });
+        console.log(res);
+        swal("Success", "your transaction is success", "success");
       })
       .catch(err => {
         console.log(err);
@@ -155,13 +189,31 @@ class Cart extends React.Component {
     this.setState({ modalOpen: !this.state.modalOpen });
   };
 
+  checkboxHandler = (e, idx) => {
+    const { checked } = e.target;
+
+    if (checked) {
+      this.setState({
+        items: [...this.state.cartData, idx]
+      });
+    } else {
+      this.setState({
+        items: [...this.state.cartData.filter(val => val !== idx)]
+      });
+    }
+  };
+
   render() {
     return (
       <div className="container py-4">
+        <caption className="p-3">
+          <h2>Cart</h2>
+        </caption>
         {this.state.cartData.length > 0 ? (
           <Table>
             <thead className="text-center">
               <tr>
+                {/* <th></th> */}
                 <th>No</th>
                 <th>Image</th>
                 <th>Product Name</th>
@@ -212,12 +264,24 @@ class Cart extends React.Component {
                   </thead>
                   <tbody>
                     {this.checkoutHandlder()}
+                    <tr>
+                      <select
+                        value={this.state.delivery}
+                        className="custom-text-input h-100 pl-3"
+                        onChange={e => this.inputHandler(e, "delivery")}
+                      >
+                        <option value="instant">Instant</option>
+                        <option value="sameday">SameDay</option>
+                        <option value="express">Express</option>
+                        <option value="economy">Economy</option>
+                      </select>
+                    </tr>
                     <tr colSpan={5}>
                       Subtotal :{" "}
                       {new Intl.NumberFormat("id-ID", {
                         style: "currency",
                         currency: "IDR"
-                      }).format(this.state.checkoutData.totalPrice)}
+                      }).format(this.state.checkoutData.grandTotalPrice)}
                     </tr>
                   </tbody>
                 </Table>
@@ -250,8 +314,13 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    cart: state.cart
   };
 };
 
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = {
+  numberOfItemInCart: countCartHandler
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

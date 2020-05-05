@@ -57,7 +57,7 @@ class Home extends React.Component {
   };
 
   renderCarouselItems = () => {
-    return dummy.map(({ image, productName, desc, id }) => {
+    return this.state.bestSellerData.map(({ image, productName, desc, id }) => {
       return (
         <CarouselItem
           onExiting={() => this.setState({ animating: true })}
@@ -86,7 +86,15 @@ class Home extends React.Component {
                   </ButtonUI>
                 </div>
                 <div className="col-6 d-flex flex-row justify-content-center">
-                  <img src={image} alt="" style={{ height: "750px" }} />
+                  <img
+                    src={image}
+                    alt=""
+                    style={{
+                      width: "100%",
+                      objectFit: "contain",
+                      height: "750px"
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -95,6 +103,46 @@ class Home extends React.Component {
       );
     });
   };
+
+  // renderCarouselItems = () => {
+  //   return dummy.map(({ image, productName, desc, id }) => {
+  //     return (
+  //       <CarouselItem
+  //         onExiting={() => this.setState({ animating: true })}
+  //         onExited={() => this.setState({ animating: false })}
+  //         key={id.toString()}
+  //       >
+  //         <div className="carousel-item-home">
+  //           <div className="container position-relative">
+  //             <div className="row" style={{ paddingTop: "80px" }}>
+  //               <div className="col-6 text-white position-relative">
+  //                 <h2>{productName}</h2>
+  //                 <p className="mt-4">{desc}</p>
+  //                 <ButtonUI
+  //                   type="outlined"
+  //                   style={{
+  //                     backgroundColor: "#CCEAD7",
+  //                     borderColor: "#CCEAD7",
+  //                     borderRadius: "16px",
+  //                     fontWeight: "bolder",
+  //                     position: "absolute",
+  //                     bottom: 420
+  //                   }}
+  //                   onClick=""
+  //                 >
+  //                   BUY NOW
+  //                 </ButtonUI>
+  //               </div>
+  //               <div className="col-6 d-flex flex-row justify-content-center">
+  //                 <img src={image} alt="" style={{ height: "750px" }} />
+  //               </div>
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </CarouselItem>
+  //     );
+  //   });
+  // };
 
   nextHandler = () => {
     if (this.state.animating) return;
@@ -133,7 +181,8 @@ class Home extends React.Component {
       if (
         val.productName
           .toLowerCase()
-          .startsWith(this.props.user.searchInput.toLowerCase())
+          .includes(this.props.user.searchInput.toLowerCase())
+        // startsWith cuma awalnya aja
       ) {
         return (
           <Link
@@ -144,6 +193,7 @@ class Home extends React.Component {
               key={`bestseller-${val.id}`}
               data={val}
               className="m-2"
+              // user={this.props.user}
             />
           </Link>
         );
@@ -163,6 +213,16 @@ class Home extends React.Component {
     return (
       <div>
         <div className="d-flex justify-content-center flex-row align-items-center my-3">
+          <Link to="/" style={{ color: "inherit" }}>
+            <h6
+              className="mx-4 font-weight-bold"
+              onClick={() => {
+                this.categoryProduct();
+              }}
+            >
+              ALL
+            </h6>
+          </Link>
           <Link to="/" style={{ color: "inherit" }}>
             <h6
               className="mx-4 font-weight-bold"

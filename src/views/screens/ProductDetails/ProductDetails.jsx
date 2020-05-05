@@ -7,6 +7,8 @@ import ButtonUI from "../../components/Button/Button";
 import TextField from "../../components/TextField/TextField";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
+import { countCartHandler } from "../../../redux/actions";
+import { Link, Redirect } from "react-router-dom";
 
 class ProductDetails extends React.Component {
   state = {
@@ -40,6 +42,7 @@ class ProductDetails extends React.Component {
               "Your item has been added to your cart",
               "success"
             );
+            this.props.numberOfItemInCart(this.props.user.id);
             console.log(res);
           })
           .catch(err => {
@@ -67,6 +70,40 @@ class ProductDetails extends React.Component {
     console.log(this.state.productData.id);
   };
 
+  addToWishlistHandler = () => {
+    // POST method ke /cart
+    // Isinya: userId, productId, quantity
+    // console.log(this.props.user.id);
+    Axios.get(`${API_URL}/wishlists`, {
+      params: {
+        productId: this.state.productData.id,
+        userId: this.props.user.id
+      }
+    }).then(res => {
+      if (res.data.length > 0) {
+        swal("Error", "The item is already exist on your wishlist", "error");
+      } else {
+        Axios.post(`${API_URL}/wishlists`, {
+          userId: this.props.user.id,
+          productId: this.state.productData.id
+          // quantity: 1
+        })
+          .then(res => {
+            console.log(res);
+            swal(
+              "Add to wishlist",
+              "Your item has been added to your wishlist",
+              "success"
+            );
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    });
+    console.log(this.state.productData.id);
+  };
+
   componentDidMount() {
     Axios.get(`${API_URL}/products/${this.props.match.params.productId}`)
       .then(res => {
@@ -75,6 +112,10 @@ class ProductDetails extends React.Component {
       .catch(err => {
         console.log(err);
       });
+
+    let userId = this.props.user.id;
+    this.props.numberOfItemInCart(userId);
+    console.log(this.props.location.pathname);
   }
 
   render() {
@@ -107,8 +148,14 @@ class ProductDetails extends React.Component {
             <p className="mt-4">{desc}</p>
             {/* <TextField type="number" placeholder="Quantity" className="mt-3" /> */}
             <div className="d-flex flex-row mt-4">
+              {/* <Link to={this.props.location.pathname}> */}
               <ButtonUI onClick={this.addToCartHandler}>Add To Cart</ButtonUI>
-              <ButtonUI className="ml-4" type="outlined">
+              {/* </Link> */}
+              <ButtonUI
+                onClick={this.addToWishlistHandler}
+                className="ml-4"
+                type="outlined"
+              >
                 Add To Wishlist
               </ButtonUI>
             </div>
@@ -121,8 +168,13 @@ class ProductDetails extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    cart: state.cart
   };
 };
 
-export default connect(mapStateToProps)(ProductDetails);
+const mapDispatchToProps = {
+  numberOfItemInCart: countCartHandler
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

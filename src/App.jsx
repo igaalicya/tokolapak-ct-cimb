@@ -11,15 +11,19 @@ import Navbar from "./views/components/Navbar/Navbar";
 import AuthScreen from "./views/screens/Auth/AuthScreen";
 import ProductDetails from "./views/screens/ProductDetails/ProductDetails";
 import Cart from "./views/screens/Cart/Cart";
-import AdminDashboard from "./views/screens/Admin/AdminDashboard";
 import { userKeepLogin, cookieChecker } from "./redux/actions";
+import AdminDashboard from "./views/screens/Admin/AdminDashboard";
+import AdminPayment from "./views/screens/AdminPayment/AdminPayment";
+import AdminMembers from "./views/screens/AdminMembers/AdminMembers";
+import Wishlist from "./views/screens/Wishlist/Wishlist";
+import History from "./views/screens/History/History";
 
 const cookieObj = new Cookie();
 
 class App extends React.Component {
   componentDidMount() {
     setTimeout(() => {
-      let cookieResult = cookieObj.get("authData");
+      let cookieResult = cookieObj.get("authData", { path: "/" });
       if (cookieResult) {
         this.props.keepLogin(cookieResult);
       } else {
@@ -30,7 +34,13 @@ class App extends React.Component {
 
   renderAdminRoutes = () => {
     if (this.props.user.role === "admin") {
-      return <Route exact path="/admin/dashboard" component={AdminDashboard} />;
+      return (
+        <>
+          <Route exact path="/admin/dashboard" component={AdminDashboard} />
+          <Route exact path="/admin/payment" component={AdminPayment} />
+          <Route exact path="/admin/members" component={AdminMembers} />
+        </>
+      );
     }
   };
 
@@ -48,6 +58,8 @@ class App extends React.Component {
               component={ProductDetails}
             />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/wishlist" component={Wishlist} />
+            <Route exact path="/history" component={History} />
             {this.renderAdminRoutes()}
           </Switch>
           <div style={{ height: "120px" }} />

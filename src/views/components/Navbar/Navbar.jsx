@@ -18,7 +18,7 @@ import ButtonUI from "../Button/Button";
 import {
   logoutHandler,
   searchProductHandler,
-  numberOfItemInCart
+  countCartHandler
 } from "../../../redux/actions";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
@@ -55,24 +55,25 @@ class Navbar extends React.Component {
     // this.forceUpdate();
   };
 
-  numberOfItemInCart = () => {
-    Axios.get(`${API_URL}/carts`, {
-      params: {
-        userId: this.props.user.id,
-        _expand: "product"
-      }
-    })
-      .then(res => {
-        console.log(res.data);
-        this.setState({ numberOfItem: res.data.length });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
+  // numberOfItemInCart = () => {
+  //   Axios.get(`${API_URL}/carts`, {
+  //     params: {
+  //       userId: this.props.user.id,
+  //       _expand: "product"
+  //     }
+  //   })
+  //     .then(res => {
+  //       console.log(res.data);
+  //       this.setState({ numberOfItem: res.data.length });
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
 
   componentDidMount() {
-    this.numberOfItemInCart();
+    let userId = this.props.user.id;
+    this.props.numberOfItemInCart(userId);
   }
 
   toggleDropdown = () => {
@@ -115,18 +116,54 @@ class Navbar extends React.Component {
                   <FontAwesomeIcon icon={faUser} style={{ fontSize: 24 }} />
                   <p className="small ml-3 mr-4">{this.props.user.username}</p>
                 </DropdownToggle>
-                <DropdownMenu className="mt-2">
-                  <DropdownItem>
-                    <Link
-                      style={{ color: "inherit", textDecoration: "none" }}
-                      to="/admin/dashboard"
-                    >
-                      Dashboard
-                    </Link>
-                  </DropdownItem>
-                  <DropdownItem>Members</DropdownItem>
-                  <DropdownItem>Payments</DropdownItem>
-                </DropdownMenu>
+
+                {this.props.user.role == "admin" ? (
+                  <DropdownMenu className="mt-2">
+                    <DropdownItem>
+                      <Link
+                        style={{ color: "inherit", textDecoration: "none" }}
+                        to="/admin/dashboard"
+                      >
+                        Dashboard
+                      </Link>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <Link
+                        style={{ color: "inherit", textDecoration: "none" }}
+                        to="/admin/members"
+                      >
+                        Members
+                      </Link>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <Link
+                        style={{ color: "inherit", textDecoration: "none" }}
+                        to="/admin/payment"
+                      >
+                        Payments
+                      </Link>
+                    </DropdownItem>
+                  </DropdownMenu>
+                ) : (
+                  <DropdownMenu className="mt-2">
+                    <DropdownItem>
+                      <Link
+                        style={{ color: "inherit", textDecoration: "none" }}
+                        to="/wishlist"
+                      >
+                        Wishlist
+                      </Link>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <Link
+                        style={{ color: "inherit", textDecoration: "none" }}
+                        to="/history"
+                      >
+                        History
+                      </Link>
+                    </DropdownItem>
+                  </DropdownMenu>
+                )}
               </Dropdown>
               <Link
                 className="d-flex flex-row"
@@ -140,7 +177,7 @@ class Navbar extends React.Component {
                 />
                 <CircleBg>
                   <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
-                    {this.state.numberOfItem}
+                    {this.props.cart.quantity}
                   </small>
                 </CircleBg>
                 <Link
@@ -186,13 +223,14 @@ class Navbar extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    cart: state.cart
   };
 };
 
 const mapDispatchToProps = {
   onLogout: logoutHandler,
   searchProduct: searchProductHandler,
-  numberOfItemInCart
+  numberOfItemInCart: countCartHandler
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

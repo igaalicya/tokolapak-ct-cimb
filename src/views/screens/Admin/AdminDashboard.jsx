@@ -99,7 +99,13 @@ class AdminDashboard extends React.Component {
                     </h6>
                     <h6>
                       Description:
-                      <span style={{ fontWeight: "normal" }}> {desc}</span>
+                      <span
+                        style={{ fontWeight: "normal" }}
+                        className="text-justify"
+                      >
+                        {" "}
+                        {desc}
+                      </span>
                     </h6>
                   </div>
                 </div>
@@ -110,7 +116,11 @@ class AdminDashboard extends React.Component {
                   >
                     Edit
                   </ButtonUI>
-                  <ButtonUI className="mt-3" type="textual">
+                  <ButtonUI
+                    onClick={() => this.deleteHandler(idx)}
+                    className="mt-3"
+                    type="textual"
+                  >
                     Delete
                   </ButtonUI>
                 </div>
@@ -175,6 +185,17 @@ class AdminDashboard extends React.Component {
       .catch(err => {
         swal("Error!", "Your item could not be edited", "error");
         console.log(err);
+      });
+  };
+
+  deleteHandler = id => {
+    Axios.delete(`${API_URL}/products/${id}`)
+      .then(res => {
+        console.log(res);
+        this.getProductList();
+      })
+      .catch(err => {
+        console.log("gagal");
       });
   };
 
