@@ -35,6 +35,10 @@ class Cart extends React.Component {
     this.getCartData();
   }
 
+  // componentDidUpdate() {
+  //   this.deliveryCostHandler(this.state.delivery);
+  // }
+
   getCartData = () => {
     let grandTotalPrice = 0;
 
@@ -117,6 +121,18 @@ class Cart extends React.Component {
       });
   };
 
+  deliveryCostHandler = deliveryMethod => {
+    if (deliveryMethod == "instant") {
+      this.setState({ deliveryCost: 100000 });
+    } else if (deliveryMethod == "sameday") {
+      this.setState({ deliveryCost: 50000 });
+    } else if (deliveryMethod == "express") {
+      this.setState({ deliveryCost: 20000 });
+    } else if (deliveryMethod == "economy") {
+      this.setState({ deliveryCost: 0 });
+    }
+  };
+
   checkoutBtnHandler = () => {
     this.setState({
       modalOpen: true
@@ -124,6 +140,7 @@ class Cart extends React.Component {
   };
 
   checkoutHandlder = () => {
+    console.log(this.state.deliveryCost);
     const { cartData } = this.state;
     let totalPrice;
     return cartData.map((val, idx) => {
@@ -268,12 +285,12 @@ class Cart extends React.Component {
                       <select
                         value={this.state.delivery}
                         className="custom-text-input h-100 pl-3"
-                        onChange={e => this.inputHandler(e, "delivery")}
+                        onChange={this.deliveryCostHandler}
                       >
                         <option value="instant">Instant</option>
-                        <option value="sameday">SameDay</option>
-                        <option value="express">Express</option>
-                        <option value="economy">Economy</option>
+                        <option value="50000">SameDay</option>
+                        <option value="20000">Express</option>
+                        <option value="0">Economy</option>
                       </select>
                     </tr>
                     <tr colSpan={5}>

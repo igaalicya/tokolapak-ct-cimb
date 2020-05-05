@@ -1,5 +1,5 @@
 const init_state = {
-  quantity: 0
+  total: 0
 };
 
 export default (state = init_state, action) => {
@@ -7,7 +7,7 @@ export default (state = init_state, action) => {
     case "GET_NUMBER_OF_ITEM":
       return {
         ...state,
-        quantity: action.payload
+        total: action.payload
       };
     default:
       return { ...state };

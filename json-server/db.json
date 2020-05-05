@@ -158,9 +158,9 @@
     },
     {
       "userId": 2,
-      "productId": 2,
+      "productId": 7,
       "quantity": 1,
-      "id": 21
+      "id": 20
     }
   ],
   "transactions": [
@@ -260,6 +260,11 @@
       "userId": 1,
       "productId": 2,
       "id": 6
+    },
+    {
+      "userId": 2,
+      "productId": 4,
+      "id": 7
     }
   ]
 }

@@ -17,6 +17,8 @@ import AdminPayment from "./views/screens/AdminPayment/AdminPayment";
 import AdminMembers from "./views/screens/AdminMembers/AdminMembers";
 import Wishlist from "./views/screens/Wishlist/Wishlist";
 import History from "./views/screens/History/History";
+import PageNotFound from "./views/screens/PageNotFound/PageNotFound";
+import AdminReport from "./views/screens/AdminReport/AdminReport";
 
 const cookieObj = new Cookie();
 
@@ -39,6 +41,7 @@ class App extends React.Component {
           <Route exact path="/admin/dashboard" component={AdminDashboard} />
           <Route exact path="/admin/payment" component={AdminPayment} />
           <Route exact path="/admin/members" component={AdminMembers} />
+          <Route exact path="/admin/report" component={AdminReport} />
         </>
       );
     }
@@ -61,6 +64,7 @@ class App extends React.Component {
             <Route exact path="/wishlist" component={Wishlist} />
             <Route exact path="/history" component={History} />
             {this.renderAdminRoutes()}
+            <Route path="*" component={PageNotFound} />
           </Switch>
           <div style={{ height: "120px" }} />
         </>

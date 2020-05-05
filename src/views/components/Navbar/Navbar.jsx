@@ -143,6 +143,14 @@ class Navbar extends React.Component {
                         Payments
                       </Link>
                     </DropdownItem>
+                    <DropdownItem>
+                      <Link
+                        style={{ color: "inherit", textDecoration: "none" }}
+                        to="/admin/report"
+                      >
+                        Report
+                      </Link>
+                    </DropdownItem>
                   </DropdownMenu>
                 ) : (
                   <DropdownMenu className="mt-2">
@@ -177,7 +185,7 @@ class Navbar extends React.Component {
                 />
                 <CircleBg>
                   <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
-                    {this.props.cart.quantity}
+                    {this.props.cart.total}
                   </small>
                 </CircleBg>
                 <Link

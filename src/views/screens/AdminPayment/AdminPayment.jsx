@@ -11,7 +11,9 @@ class AdminPayment extends React.Component {
   state = {
     transactionList: [],
     modalOpen: false,
-    dateCalendar: new Date()
+    dateCalendar: new Date(),
+    activeProducts: [],
+    activePage: "completed"
   };
 
   getTransactionList = () => {
@@ -31,7 +33,7 @@ class AdminPayment extends React.Component {
       const {
         id,
         userId,
-        totalPrice,
+        grandTotalPrice,
         status,
         transactionDate,
         CompletionDate
@@ -39,17 +41,29 @@ class AdminPayment extends React.Component {
 
       return (
         <>
-          <tr className="text-center">
+          <tr
+            onClick={() => {
+              if (this.state.activeProducts.includes(idx)) {
+                this.setState({
+                  activeProducts: [
+                    ...this.state.activeProducts.filter(item => item !== idx)
+                  ]
+                });
+              } else {
+                this.setState({
+                  activeProducts: [...this.state.activeProducts, idx]
+                });
+              }
+            }}
+          >
             <td> {idx + 1} </td>
             <td> {userId} </td>
-            <td> {transactionDate} </td>
-            <td> {CompletionDate} </td>
             <td>
               {" "}
               {new Intl.NumberFormat("id-ID", {
                 style: "currency",
                 currency: "IDR"
-              }).format(totalPrice)}{" "}
+              }).format(grandTotalPrice)}{" "}
             </td>
             <td>{status}</td>
             <td>
@@ -61,6 +75,58 @@ class AdminPayment extends React.Component {
               >
                 Confirm Payment
               </ButtonUI>
+            </td>
+          </tr>
+          <tr
+            className={`collapse-item ${
+              this.state.activeProducts.includes(idx) ? "active" : null
+            }`}
+          >
+            <td className="" colSpan={3}>
+              <div className="d-flex justify-content-around align-items-center">
+                <div className="d-flex">
+                  <div className="d-flex flex-column ml-4 justify-content-center">
+                    {/* <h5>{transactionDate}</h5> */}
+                    <h6 className="mt-2">
+                      Transaction Date:
+                      <span style={{ fontWeight: "normal" }}>
+                        {" "}
+                        {transactionDate}
+                      </span>
+                    </h6>
+                    <h6>
+                      Price:
+                      <span
+                        style={{ fontWeight: "normal" }}
+                        className="text-justify"
+                      >
+                        {new Intl.NumberFormat("id-ID", {
+                          style: "currency",
+                          currency: "IDR"
+                        }).format(grandTotalPrice)}
+                      </span>
+                    </h6>
+                    <h6>
+                      Completion Date:
+                      <span
+                        style={{ fontWeight: "normal" }}
+                        className="text-justify"
+                      >
+                        {CompletionDate}
+                      </span>
+                    </h6>
+                    <h6>
+                      Total Price:
+                      <span
+                        style={{ fontWeight: "normal" }}
+                        className="text-justify"
+                      >
+                        {grandTotalPrice}
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
             </td>
           </tr>
         </>
@@ -95,7 +161,27 @@ class AdminPayment extends React.Component {
   render() {
     return (
       <div className="container py-4">
-        <div className="dashboard">
+        <div className="d-flex flex-row">
+          <ButtonUI
+            className={`auth-screen-btn ${
+              this.state.activePage == "completed" ? "active" : null
+            }`}
+            type="outlined"
+            onClick={() => this.setState({ activePage: "completed" })}
+          >
+            Completed
+          </ButtonUI>
+          <ButtonUI
+            className={`ml-3 auth-screen-btn ${
+              this.state.activePage == "pending" ? "active" : null
+            }`}
+            type="outlined"
+            onClick={() => this.setState({ activePage: "pending" })}
+          >
+            Pending
+          </ButtonUI>
+        </div>
+        <div className="dashboard mt-5">
           <caption className="p-3">
             <h2>Payment</h2>
           </caption>
@@ -104,8 +190,6 @@ class AdminPayment extends React.Component {
               <tr className="text-center">
                 <th>No.</th>
                 <th>User ID</th>
-                <th>Transaction Date</th>
-                <th>Completion Date</th>
                 <th>Total Price</th>
                 <th>Status</th>
                 <th>Action</th>
