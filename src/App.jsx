@@ -44,6 +44,14 @@ class App extends React.Component {
           <Route exact path="/admin/report" component={AdminReport} />
         </>
       );
+    } else if (this.props.role == "user") {
+      return (
+        <>
+          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/wishlist" component={Wishlist} />
+          <Route exact path="/history" component={History} />
+        </>
+      );
     }
   };
 
@@ -60,9 +68,6 @@ class App extends React.Component {
               path="/product/:productId"
               component={ProductDetails}
             />
-            <Route exact path="/cart" component={Cart} />
-            <Route exact path="/wishlist" component={Wishlist} />
-            <Route exact path="/history" component={History} />
             {this.renderAdminRoutes()}
             <Route path="*" component={PageNotFound} />
           </Switch>
