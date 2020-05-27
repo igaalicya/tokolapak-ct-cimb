@@ -11,27 +11,28 @@ import Navbar from "./views/components/Navbar/Navbar";
 import AuthScreen from "./views/screens/Auth/AuthScreen";
 import ProductDetails from "./views/screens/ProductDetails/ProductDetails";
 import Cart from "./views/screens/Cart/Cart";
+// import AdminDashboard from "./views/screens/Admin/AdminDashboard";
 import { userKeepLogin, cookieChecker } from "./redux/actions";
+// import Payments from "./views/screens/Admin/Payments";
+import PageNotFound from "./views/screens/PageNotFound";
+import History from "./views/screens/History/History";
+// import Report from "./views/screens/Admin/Report";
+import Wishlist from "./views/screens/Wishlist/Wishlist";
 import AdminDashboard from "./views/screens/Admin/AdminDashboard";
 import AdminPayment from "./views/screens/AdminPayment/AdminPayment";
-import AdminMembers from "./views/screens/AdminMembers/AdminMembers";
-import Wishlist from "./views/screens/Wishlist/Wishlist";
-import History from "./views/screens/History/History";
-import PageNotFound from "./views/screens/PageNotFound/PageNotFound";
 import AdminReport from "./views/screens/AdminReport/AdminReport";
+import AdminMembers from "./views/screens/AdminMembers/AdminMembers";
 
 const cookieObj = new Cookie();
 
 class App extends React.Component {
   componentDidMount() {
-    setTimeout(() => {
-      let cookieResult = cookieObj.get("authData", { path: "/" });
-      if (cookieResult) {
-        this.props.keepLogin(cookieResult);
-      } else {
-        this.props.cookieChecker();
-      }
-    }, 2000);
+    let cookieResult = cookieObj.get("authData", { path: "/" });
+    if (cookieResult) {
+      this.props.keepLogin(cookieResult);
+    } else {
+      this.props.cookieChecker();
+    }
   }
 
   renderAdminRoutes = () => {
@@ -44,17 +45,19 @@ class App extends React.Component {
           <Route exact path="/admin/report" component={AdminReport} />
         </>
       );
-    } else if (this.props.role == "user") {
+    }
+  };
+  renderProtectedRoutes = () => {
+    if (this.props.user.id) {
       return (
         <>
           <Route exact path="/cart" component={Cart} />
-          <Route exact path="/wishlist" component={Wishlist} />
           <Route exact path="/history" component={History} />
+          <Route exact path="/wishlist" component={Wishlist} />
         </>
       );
     }
   };
-
   render() {
     if (this.props.user.cookieChecked) {
       return (
@@ -69,6 +72,7 @@ class App extends React.Component {
               component={ProductDetails}
             />
             {this.renderAdminRoutes()}
+            {this.renderProtectedRoutes()}
             <Route path="*" component={PageNotFound} />
           </Switch>
           <div style={{ height: "120px" }} />
@@ -101,4 +105,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
  * 4. Di cart, buat button checkout, serta dengan proses checkout
  * 5. Ketika confirm checkout, lakukan POST request ke db.json ke transaction
  *    -> lalu cart harus kosong
+ *
+ * TRANSACTIONS
+ * userId
+ * total price
+ * status -> "pending"
+ * tanggal belanja
+ * tanggal selesai -> ""
+ *
+ * TRANSACTION_DETAILS
+ * transactionId
+ * productId
+ * price
+ * quantity
+ * totalPrice (price * quantity)
+ *
  */

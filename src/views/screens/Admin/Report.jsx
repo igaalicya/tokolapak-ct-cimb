@@ -2,27 +2,27 @@ import React from "react";
 import Axios from "axios";
 import { API_URL } from "../../../constants/API";
 import ButtonUI from "../../components/Button/Button";
-import { priceFormatter } from "../../../supports/helpers/formatter";
+import swal from "sweetalert";
 
 class Report extends React.Component {
   state = {
     reportType: "user",
     userReportList: [],
-    productReportList: []
+    productReportList: [],
   };
 
   getUserReportList = () => {
     Axios.get(`${API_URL}/transactions`, {
       params: {
         status: "completed",
-        _expand: "user"
-      }
+        _expand: "user",
+      },
     })
-      .then(res => {
+      .then((res) => {
         // console.log(res.data);
         this.setState({ userReportList: res.data });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -31,13 +31,13 @@ class Report extends React.Component {
     Axios.get(
       `${API_URL}/transactionDetails?_expand=transaction&_expand=product`
     )
-      .then(res => {
+      .then((res) => {
         console.log(
-          res.data.filter(trx => trx.transaction.status === "completed")
+          res.data.filter((trx) => trx.transaction.status === "completed")
         );
         this.setState({ productReportList: res.data });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -45,29 +45,29 @@ class Report extends React.Component {
   renderUserReportList = () => {
     let userList = [];
 
-    this.state.userReportList.forEach(val => {
+    this.state.userReportList.forEach((val) => {
       let findUserIdx = userList.findIndex(
-        user => user.username === val.user.username
+        (user) => user.username === val.user.username
       );
 
       if (findUserIdx !== -1) {
         // Check apakah user sudah tertampung
         // Belom ada = -1
         // !== -1 -> sudah ada
-        userList[findUserIdx].total += val.grandTotalPrice;
+        userList[findUserIdx].total += val.totalPrice;
       } else {
         userList.push({
           username: val.user.username,
-          total: val.grandTotalPrice
+          total: val.totalPrice,
         });
       }
     });
 
-    return userList.map(val => {
+    return userList.map((val) => {
       return (
         <tr>
           <td>{val.username}</td>
-          <td>{priceFormatter(val.total)}</td>
+          <td>{val.total}</td>
         </tr>
       );
     });
@@ -77,10 +77,10 @@ class Report extends React.Component {
     let productList = [];
 
     this.state.productReportList
-      .filter(trx => trx.transaction.status === "completed")
-      .forEach(val => {
+      .filter((trx) => trx.transaction.status === "completed")
+      .forEach((val) => {
         let findProductIdx = productList.findIndex(
-          item => item.productName === val.product.productName
+          (item) => item.productName === val.product.productName
         );
 
         if (findProductIdx !== -1) {
@@ -88,12 +88,12 @@ class Report extends React.Component {
         } else {
           productList.push({
             productName: val.product.productName,
-            total: val.quantity
+            total: val.quantity,
           });
         }
       });
 
-    return productList.map(val => {
+    return productList.map((val) => {
       return (
         <tr>
           <td>{val.productName}</td>

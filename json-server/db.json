@@ -113,54 +113,6 @@
       "productId": 5,
       "quantity": 14,
       "id": 7
-    },
-    {
-      "userId": 1,
-      "productId": 1,
-      "quantity": 2,
-      "id": 11
-    },
-    {
-      "userId": 1,
-      "productId": 3,
-      "quantity": 2,
-      "id": 12
-    },
-    {
-      "userId": 1,
-      "productId": 8,
-      "quantity": 1,
-      "id": 13
-    },
-    {
-      "userId": 1,
-      "productId": 5,
-      "quantity": 1,
-      "id": 15
-    },
-    {
-      "userId": 1,
-      "productId": 2,
-      "quantity": 2,
-      "id": 16
-    },
-    {
-      "userId": 1,
-      "productId": 7,
-      "quantity": 2,
-      "id": 17
-    },
-    {
-      "userId": 2,
-      "productId": 5,
-      "quantity": 1,
-      "id": 21
-    },
-    {
-      "userId": 2,
-      "productId": 4,
-      "quantity": 1,
-      "id": 22
     }
   ],
   "transactions": [
@@ -192,10 +144,36 @@
     {
       "userId": 2,
       "grandTotalPrice": 5200000,
-      "status": "pending",
+      "status": "completed",
       "transactionDate": "5/4/2020",
       "completionDate": "",
-      "id": 4
+      "id": 4,
+      "CompletionDate": "5/12/2020"
+    },
+    {
+      "userId": 2,
+      "grandTotalPrice": 21000000,
+      "status": "completed",
+      "transactionDate": "5/12/2020",
+      "completionDate": "",
+      "id": 5,
+      "CompletionDate": "5/12/2020"
+    },
+    {
+      "userId": 1,
+      "grandTotalPrice": 0,
+      "status": "pending",
+      "transactionDate": "5/12/2020",
+      "completionDate": "",
+      "id": 6
+    },
+    {
+      "userId": 1,
+      "grandTotalPrice": 5100000,
+      "status": "pending",
+      "transactionDate": "5/12/2020",
+      "completionDate": "",
+      "id": 7
     }
   ],
   "transactionDetails": [
@@ -232,28 +210,60 @@
       "id": 4
     },
     {
+      "transactionId": 5,
+      "productId": 5,
+      "price": 20000000,
+      "quantity": 1,
+      "totalPrice": 20000000,
+      "id": 8
+    },
+    {
+      "transactionId": 5,
+      "productId": 4,
+      "price": 1000000,
+      "quantity": 1,
+      "totalPrice": 1000000,
+      "id": 9
+    },
+    {
+      "transactionId": 6,
+      "productId": 1,
+      "price": 5000000,
+      "quantity": 2,
+      "totalPrice": 10000000,
+      "id": 10
+    },
+    {
+      "transactionId": 6,
+      "productId": 3,
+      "price": 20000000,
+      "quantity": 2,
+      "totalPrice": 40000000,
+      "id": 11
+    },
+    {
+      "transactionId": 6,
+      "productId": 5,
+      "price": 20000000,
+      "quantity": 1,
+      "totalPrice": 20000000,
+      "id": 12
+    },
+    {
       "transactionId": 6,
       "productId": 2,
       "price": 15000000,
-      "quantity": 1,
-      "totalPrice": 15000000,
-      "id": 5
+      "quantity": 2,
+      "totalPrice": 30000000,
+      "id": 13
     },
     {
       "transactionId": 7,
       "productId": 1,
       "price": 5000000,
-      "quantity": 2,
-      "totalPrice": 10000000,
-      "id": 6
-    },
-    {
-      "transactionId": 7,
-      "productId": 7,
-      "price": "30000000",
       "quantity": 1,
-      "totalPrice": 30000000,
-      "id": 7
+      "totalPrice": 5000000,
+      "id": 14
     }
   ],
   "wishlists": [

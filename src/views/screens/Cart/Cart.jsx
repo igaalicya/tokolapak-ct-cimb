@@ -9,6 +9,8 @@ import ButtonUI from "../../components/Button/Button";
 import swal from "sweetalert";
 import { countCartHandler } from "../../../redux/actions";
 
+import { priceFormatter } from "../../../supports/helpers/formatter";
+
 class Cart extends React.Component {
   state = {
     dateCalendar: new Date(),
@@ -24,7 +26,8 @@ class Cart extends React.Component {
       completionDate: ""
     },
     delivery: 0,
-    deliveryCost: 0
+    deliveryCost: 0,
+    shipping: "instant"
   };
 
   inputHandler = (e, field) => {
@@ -163,9 +166,11 @@ class Cart extends React.Component {
       );
     });
   };
-
   confirmPayment = () => {
-    Axios.post(`${API_URL}/transactions`, this.state.checkoutData)
+    Axios.post(`${API_URL}/transactions`, {
+      ...this.state.checkoutData,
+      grandTotalPrice: this.renderTotalPrice()
+    })
       .then(res => {
         this.state.cartData.map(val => {
           Axios.post(`${API_URL}/transactionDetails`, {
@@ -195,14 +200,11 @@ class Cart extends React.Component {
         console.log(err);
       });
   };
-
   toggleModal = () => {
     this.setState({ modalOpen: !this.state.modalOpen });
   };
-
   checkboxHandler = (e, idx) => {
     const { checked } = e.target;
-
     if (checked) {
       this.setState({
         items: [...this.state.cartData, idx]
@@ -214,6 +216,62 @@ class Cart extends React.Component {
     }
   };
 
+  renderSubTotalPrice = () => {
+    let totalPrice = 0;
+
+    this.state.cartData.forEach(val => {
+      const { quantity, product } = val;
+      const { price } = product;
+
+      totalPrice += quantity * price;
+    });
+
+    return totalPrice;
+  };
+
+  renderShippingPrice = () => {
+    switch (this.state.shipping) {
+      case "instant":
+        return priceFormatter(100000);
+      case "sameDay":
+        return priceFormatter(50000);
+      case "express":
+        return priceFormatter(20000);
+      default:
+        return "Free";
+    }
+  };
+
+  renderTotalPrice = () => {
+    let totalPrice = 0;
+
+    this.state.cartData.forEach(val => {
+      const { quantity, product } = val;
+      const { price } = product;
+
+      totalPrice += quantity * price;
+    });
+
+    let shippingPrice = 0;
+
+    switch (this.state.shipping) {
+      case "instant":
+        shippingPrice = 100000;
+        break;
+      case "sameDay":
+        shippingPrice = 50000;
+        break;
+      case "express":
+        shippingPrice = 20000;
+        break;
+      default:
+        shippingPrice = 0;
+        break;
+    }
+
+    return totalPrice + shippingPrice;
+  };
+
   render() {
     return (
       <div className="container py-4">
@@ -221,45 +279,58 @@ class Cart extends React.Component {
           <h2>Cart</h2>
         </caption>
         {this.state.cartData.length > 0 ? (
-          <Table>
-            <thead className="text-center">
-              <tr>
-                {/* <th></th> */}
-                <th>No</th>
-                <th>Image</th>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody className="text-center">{this.renderCart()}</tbody>
-            <tfoot>
-              <tr>
-                <td colSpan={2}></td>
-                <td colSpan={1} className="text-right">
-                  Pilih jenis pengiriman :
-                </td>
-                <td colSpan={2}>
+          <div className="container">
+            <table className="cart-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Image</th>
+                  <th>Product Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>{this.renderCart()}</tbody>
+            </table>
+            <div className="cart-card">
+              <div className="cart-card-head p-4">Order Summary</div>
+              <div className="cart-card-body p-4">
+                <div className="d-flex justify-content-between my-2">
+                  <div>Subtotal</div>
+                  <strong>{priceFormatter(this.renderSubTotalPrice())}</strong>
+                </div>
+                <div className="d-flex justify-content-between my-2">
+                  <div>Shipping</div>
+                  <strong>{this.renderShippingPrice()}</strong>
+                </div>
+                <div className="d-flex justify-content-between my-2 align-items-center">
+                  <label>Shipping Method</label>
                   <select
-                    value={this.state.delivery}
-                    className="custom-text-input h-100 pl-3"
-                    onChange={e => this.inputHandler(e, "delivery")}
+                    onChange={e => this.setState({ shipping: e.target.value })}
+                    className="form-control w-50"
                   >
-                    <option value="100000">Instant</option>
-                    <option value="50000">SameDay</option>
-                    <option value="20000">Express</option>
-                    <option value="0">Economy</option>
+                    <option value="instant">Instant</option>
+                    <option value="sameDay">Same Day</option>
+                    <option value="express">Express</option>
+                    <option value="economy">Economy</option>
                   </select>
-                </td>
-                <td colSpan={1}>
-                  <ButtonUI onClick={this.checkoutBtnHandler} type="contained">
-                    CheckOut
-                  </ButtonUI>
-                </td>
-              </tr>
-            </tfoot>
-          </Table>
+                </div>
+                <div className="cart-card-foot p-4">
+                  <div className="d-flex justify-content-between my-2">
+                    <div>Total</div>
+                    <div>{priceFormatter(this.renderTotalPrice())}</div>
+                  </div>
+                </div>
+                <input
+                  onClick={this.checkoutBtnHandler}
+                  type="button"
+                  value="Checkout"
+                  className="btn btn-success btn-block mt-3"
+                />
+              </div>
+            </div>
+          </div>
         ) : (
           <Alert>
             Your cart is empty! <Link to="/">Go shopping</Link>
@@ -290,39 +361,18 @@ class Cart extends React.Component {
                   </thead>
                   <tbody>
                     {this.checkoutHandlder()}
-                    {/* <tr>
-                      Pilih jenis pengiriman :
-                      <select
-                        value={this.state.delivery}
-                        className="custom-text-input h-100 pl-3"
-                        onChange={e => this.inputHandler(e, "delivery")}
-                      >
-                        <option value="100000">Instant</option>
-                        <option value="50000">SameDay</option>
-                        <option value="20000">Express</option>
-                        <option value="0">Economy</option>
-                      </select>
-                    </tr> */}
+
                     <tr colSpan={2}>
-                      Delivery Cost :{" "}
-                      {new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR"
-                      }).format(this.state.delivery)}
+                      Delivery Cost : {this.renderShippingPrice()}
                     </tr>
                     <tr colSpan={3}>
-                      Subtotal :
-                      {new Intl.NumberFormat("id-ID", {
-                        style: "currency",
-                        currency: "IDR"
-                      }).format(
-                        this.state.checkoutData.grandTotalPrice +
-                          +this.state.delivery
-                      )}
+                      grand Total Price :
+                      {priceFormatter(this.renderTotalPrice())}
                     </tr>
                   </tbody>
                 </Table>
               </div>
+
               <div className="col-3 mt-3 offset-1">
                 <ButtonUI
                   className="w-100"
@@ -332,7 +382,6 @@ class Cart extends React.Component {
                   Cancel
                 </ButtonUI>
               </div>
-
               <div className="col-3 mt-3">
                 <ButtonUI
                   className="w-100"
@@ -349,16 +398,13 @@ class Cart extends React.Component {
     );
   }
 }
-
 const mapStateToProps = state => {
   return {
     user: state.user,
     cart: state.cart
   };
 };
-
 const mapDispatchToProps = {
   numberOfItemInCart: countCartHandler
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

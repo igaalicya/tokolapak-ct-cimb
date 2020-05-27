@@ -142,7 +142,6 @@ class History extends React.Component {
       );
     });
   };
-
   render() {
     return (
       <div className="container py-4">
@@ -170,11 +169,9 @@ class History extends React.Component {
     );
   }
 }
-
 const mapStateToProps = state => {
   return {
     user: state.user
   };
 };
-
 export default connect(mapStateToProps)(History);
